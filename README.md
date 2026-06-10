@@ -1,2 +1,2 @@
-# ICS-Project-I
-A repository for Clifford and Ernest's CS Project One - A House Hunting Web App. 
+# ICS Project I
+A Web-Based House Hunting Application to Facilitate Off-Campus Accommodation for Strathmore University Students.
