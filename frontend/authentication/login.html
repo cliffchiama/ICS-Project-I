@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pata Place – Sign In</title>
+<style>
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Arial, sans-serif; }
+body { 
+    body { 
+    background: #F4F7FB; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; } }
+.main { 
+    flex: 1;
+    display: flex;
+    align-items: stretch; }
+.left-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../assets/logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 450px;
+    background-color: #E8EEF7; }
+.right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    background: #fff;
+    box-shadow: -4px 0 24px rgba(26,60,107,0.08);
+    overflow-y: auto;}
+.card {
+    width: 100%;
+    max-width: 380px;
+    border: none;
+    box-shadow: none;
+    padding: 0; }
+.logo-area {
+    text-align: center; 
+    margin-bottom: 24px; }
+.logo-icon { 
+    width: 56px; 
+    height: 56px; 
+    background: #1A3C6B; 
+    border-radius: 14px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin: 0 auto 12px; }
+.logo-icon svg { 
+    width: 28px; 
+    height: 28px; 
+    fill: none; 
+    stroke: #fff; 
+    stroke-width: 2; 
+    stroke-linecap: round; 
+    stroke-linejoin: round; }
+h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A3C6B; 
+    margin-bottom: 4px; }
+.sub {
+    font-size: 13px; 
+    color: #6B7A8D; }
+.tabs { 
+    display: flex; 
+    border-bottom: 1px solid #E0E7EF; 
+    margin-bottom: 20px; }
+.tab { 
+    flex: 1; 
+    text-align: center; 
+    padding: 10px; 
+    font-size: 14px; 
+    cursor: pointer; 
+    color: #6B7A8D; 
+    border-bottom: 2.5px solid transparent; 
+    transition: all 0.2s; }
+.tab.active { 
+    color: #1A3C6B; 
+    border-bottom: 2.5px solid #1A3C6B; 
+    font-weight: 600; }
+.form-panel {
+    display: none; }
+.form-panel.active { 
+    display: block; }
+.form-row { 
+    margin-bottom: 14px; }
+label {
+    display: block; 
+    font-size: 11px; 
+    font-weight: 600; 
+    color: #6B7A8D; 
+    margin-bottom: 5px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; }
+input, select {
+    width: 100%; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 10px 12px; 
+    font-size: 13px; 
+    color: #1A1A2E; 
+    background: #F8FAFD; 
+    outline: none; }
+input:focus, select:focus {
+    border-color: #2E6DB4; 
+    background: #fff; }
+.forgot {
+    font-size: 11px; 
+    color: #2E6DB4; 
+    text-align: right; 
+    margin: -8px 0 16px; 
+    cursor: pointer; }
+.submit-btn {
+    width: 100%; 
+    background: #1A3C6B; 
+    color: #fff; 
+    border: none; 
+    border-radius: 8px; 
+    padding: 12px; 
+    font-size: 14px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: background 0.2s; }
+.submit-btn:hover {
+    background: #2E6DB4; }
+.divider {
+    text-align: center; 
+    font-size: 11px; 
+    color: #6B7A8D; 
+    margin: 16px 0; 
+    position: relative; }
+.divider::before, .divider::after {
+    content:''; 
+    position: absolute; 
+    top: 50%; 
+    width: 38%; 
+    height: 1px; 
+    background: #E0E7EF; }
+.divider::before {
+    left: 0; } 
+.divider::after {
+    right: 0; }
+.role-btns {
+    display: flex; 
+    gap: 10px; }
+.role-btn {
+    flex: 1; 
+    background: #F4F7FB; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 10px 6px; 
+    text-align: center; 
+    cursor: pointer; 
+    font-size: 11px; 
+    color: #6B7A8D; 
+    transition: all 0.2s; }
+.role-btn.selected {
+    border-color: #2E6DB4; 
+    color: #1A3C6B; 
+    background: #EBF3FB; 
+    font-weight: 600; }
+.role-btn .icon { 
+    font-size: 20px; 
+    display: block; 
+    margin-bottom: 4px; }
+.form-row-half {
+    display: flex; 
+    gap: 10px; }
+.form-row-half .form-row {
+    flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="main">
+  <div class="left-panel"></div>
+  <div class="right-panel">
+    <div class="card">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h2>Pata Place</h2>
+        <p class="sub">Off-campus accommodation portal</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('signin')">Sign In</div>
+        <div class="tab" onclick="switchTab('register')">Register</div>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <div class="form-panel active" id="signin">
+        <div class="form-row"><label>Email Address</label><input type="email" placeholder="you@strathmore.edu" /></div>
+        <div class="form-row"><label>Password</label><input type="password" placeholder="••••••••" /></div>
+        <div class="forgot">Forgot password?</div>
+        <button class="submit-btn" onclick="window.location.href='../student/dashboard.html'">Sign In</button>
+        <div class="divider">or sign in as</div>
+        <div class="role-btns">
+          <div class="role-btn selected" onclick="selectRole(this)"><span class="icon">🎓</span>Student</div>
+          <div class="role-btn" onclick="selectRole(this)"><span class="icon">🏠</span>Landlord</div>
+          <div class="role-btn" onclick="selectRole(this)"><span class="icon">🛡️</span>Admin</div>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div class="form-panel" id="register">
+        <div class="form-row-half">
+          <div class="form-row"><label>First Name</label><input type="text" placeholder="Alice" /></div>
+          <div class="form-row"><label>Last Name</label><input type="text" placeholder="Wanjiku" /></div>
+        </div>
+        <div class="form-row"><label>Email Address</label><input type="email" placeholder="you@strathmore.edu" /></div>
+        <div class="form-row"><label>Phone Number</label><input type="tel" placeholder="+254 7XX XXX XXX" /></div>
+        <div class="form-row"><label>Password</label><input type="password" placeholder="••••••••" /></div>
+        <div class="form-row"><label>Confirm Password</label><input type="password" placeholder="••••••••" /></div>
+        <div class="form-row">
+          <label>Register As</label>
+          <select>
+            <option value="student">Student</option>
+            <option value="landlord">Landlord</option>
+          </select>
+        </div>
+        <button class="submit-btn" onclick="window.location.href='../student/dashboard.html'">Create Account</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (i === 0 && tab === 'signin') || (i === 1 && tab === 'register'));
+    });
+    document.getElementById('signin').classList.toggle('active', tab === 'signin');
+    document.getElementById('register').classList.toggle('active', tab === 'register');
+  }
+
+  function selectRole(el) {
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+</script>
+
+</body>
+</html>
