@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+body { 
+    background: #F4F7FB; 
+}
+.nav { 
+    background: #1A3C6B; 
+    padding: 0 28px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    height: 52px; 
+}
+.nav-brand { 
+    color: #fff; 
+    font-weight: 600; 
+    font-size: 15px; 
+}
+.nav-links { 
+    display: flex; 
+    gap: 24px; 
+    align-items: center; 
+}
+.nav-links a {
+    color: rgba(255,255,255,0.75); 
+    font-size: 13px; 
+    text-decoration: none;
+} 
+.nav-links a.active { 
+    color: #fff; 
+    font-weight: 600; 
+}
+.nav-btn { 
+    background: #fff; 
+    color: #1A3C6B; 
+    border: none; 
+    border-radius: 20px; 
+    padding: 5px 16px; 
+    font-size: 12px; 
+    font-weight: 600; 
+}
+.content { 
+    padding: 28px; 
+}
+.page-header { 
+    margin-bottom: 24px; 
+}
+.page-header h2 { 
+    font-size: 20px; 
+    font-weight: 700; 
+    color: #1A1A2E; 
+    margin-bottom: 4px; }
+.page-header p { 
+    font-size: 13px; 
+    color: #6B7A8D; 
+}
+.summary-cards { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 14px; 
+    margin-bottom: 24px; 
+}
+.s-card { 
+    background: #fff; 
+    border-radius: 10px; 
+    border: 1px solid #E0E7EF; 
+    padding: 16px; 
+}
+.s-label { 
+    font-size: 11px; 
+    font-weight: 600; 
+    color: #6B7A8D; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    margin-bottom: 6px; 
+}
+.s-val { 
+    font-size: 24px; 
+    font-weight: 700; 
+    color: #1A1A2E; 
+}
+.s-sub { 
+    font-size: 11px; 
+    color: #639922; 
+    margin-top: 2px; 
+}
+.table-card { 
+    background: #fff; 
+    border-radius: 14px; 
+    border: 1px solid #E0E7EF; 
+    overflow: hidden; 
+}
+.table-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 16px 20px; 
+    border-bottom: 1px solid #E0E7EF; 
+}
+.table-header h3 { 
+    font-size: 15px; 
+    font-weight: 600; 
+    color: #1A1A2E; 
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+th { 
+    background: #F4F7FB; 
+    padding: 11px 16px; 
+    text-align: left; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: #6B7A8D; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    border-bottom: 1px solid #E0E7EF; 
+}
+td { 
+    padding: 13px 16px; 
+    font-size: 13px; 
+    color: #1A1A2E; 
+    border-bottom: 1px solid #F0F4F8; 
+    vertical-align: middle; 
+}
+tr:last-child td { 
+    border-bottom: none; 
+}
+tr:hover td { 
+    background: #FAFCFE; 
+}
+.pill { 
+    border-radius: 20px; 
+    padding: 4px 12px; 
+    font-size: 11px; 
+    font-weight: 700; 
+    display: inline-block; 
+}
+.pill.approved { 
+    background: #EAF3DE; 
+    color: #3B6D11; 
+}
+.pill.pending { 
+    background: #FAEEDA; 
+    color: #854F0B; 
+}
+.pill.cancelled { 
+    background: #FCEBEB; 
+    color: #A32D2D; 
+}
+.icon-btn { 
+    background: transparent; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 6px; 
+    padding: 5px 10px; 
+    font-size: 12px; 
+    cursor: pointer; 
+    color: #1A1A2E; 
+    margin-right: 4px; 
+}
+.icon-btn.danger { 
+    border-color: #F09595; 
+    color: #A32D2D; 
+}
+.icon-btn:disabled { 
+    opacity: 0.35; 
+    cursor: not-allowed; 
+}
+.prop-cell { 
+    font-weight: 600; 
+}
+.prop-cell small { 
+    display: block; 
+    font-size: 11px; 
+    font-weight: 400; 
+    color: #6B7A8D; 
+    margin-top: 2px; 
+}
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="nav-brand">🏠 Pata Place</div>
+  <div class="nav-links">
+    <a href="dashboard.html">Browse</a>
+    <a href="requests.html" class="active">My Requests</a>
+    <a href="#">Notifications</a>
+    <a href="#">Profile</a>
+    <button class="nav-btn">Logout</button>
+  </div>
+</div>
+<div class="content">
+  <div class="page-header">
+    <h2>My Viewing Requests</h2>
+    <p>Track the status of all your property viewing applications</p>
+  </div>
+  <div class="summary-cards">
+    <div class="s-card"><div class="s-label">Total Requests</div><div class="s-val">5</div></div>
+    <div class="s-card"><div class="s-label">Approved</div><div class="s-val" style="color:#3B6D11;">2</div><div class="s-sub">↑ 1 this week</div></div>
+    <div class="s-card"><div class="s-label">Pending</div><div class="s-val" style="color:#854F0B;">2</div></div>
+    <div class="s-card"><div class="s-label">Cancelled</div><div class="s-val" style="color:#A32D2D;">1</div></div>
+  </div>
+  <div class="table-card">
+    <div class="table-header">
+      <h3>All Requests</h3>
+      <button style="background:#1A3C6B;color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;">+ New Request</button>
+    </div>
+    <table>
+      <thead><tr><th>Property</th><th>Request ID</th><th>Date Requested</th><th>Viewing Date</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><div class="prop-cell">Kilimani Studio Apartment<small>📍 Kilimani · KES 12,000/mo</small></div></td><td style="color:#6B7A8D;">#REQ-001</td><td>Jun 1, 2026</td><td>Jun 7, 2026</td><td><span class="pill approved">✓ Approved</span></td><td><button class="icon-btn">👁 View</button><button class="icon-btn danger">✕ Cancel</button></td></tr>
+        <tr><td><div class="prop-cell">Lavington 1 Bedroom<small>📍 Lavington · KES 18,500/mo</small></div></td><td style="color:#6B7A8D;">#REQ-002</td><td>Jun 2, 2026</td><td>Jun 9, 2026</td><td><span class="pill pending">⏳ Pending</span></td><td><button class="icon-btn">👁 View</button><button class="icon-btn danger">✕ Cancel</button></td></tr>
+        <tr><td><div class="prop-cell">Adams Arcade Bedsitter<small>📍 Adams Arcade · KES 8,000/mo</small></div></td><td style="color:#6B7A8D;">#REQ-003</td><td>May 30, 2026</td><td>Jun 4, 2026</td><td><span class="pill cancelled">✕ Cancelled</span></td><td><button class="icon-btn">👁 View</button><button class="icon-btn danger" disabled>✕ Cancel</button></td></tr>
+        <tr><td><div class="prop-cell">Ngong Road Studio<small>📍 Ngong Road · KES 10,500/mo</small></div></td><td style="color:#6B7A8D;">#REQ-004</td><td>Jun 3, 2026</td><td>Jun 10, 2026</td><td><span class="pill approved">✓ Approved</span></td><td><button class="icon-btn">👁 View</button><button class="icon-btn danger">✕ Cancel</button></td></tr>
+        <tr><td><div class="prop-cell">South B 2 Bedroom<small>📍 South B · KES 25,000/mo</small></div></td><td style="color:#6B7A8D;">#REQ-005</td><td>Jun 3, 2026</td><td>Jun 12, 2026</td><td><span class="pill pending">⏳ Pending</span></td><td><button class="icon-btn">👁 View</button><button class="icon-btn danger">✕ Cancel</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
