@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pata Place – Add Property</title>
+<link rel="icon" type="image/png" href="../assets/headicon.png">
+<style>
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Arial, sans-serif; }
+body { 
+    background: #F4F7FB; 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; }
+
+/* ── Navbar ── */
+.nav { 
+    background: #1A3C6B; 
+    padding: 0 32px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    height: 52px; }
+.nav-brand { 
+    color: #fff; 
+    font-weight: 600; 
+    font-size: 16px; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; }
+.nav-brand svg { 
+    width: 20px; 
+    height: 20px; 
+    fill: none; 
+    stroke: #fff; 
+    stroke-width: 2; 
+    stroke-linecap: round; 
+    stroke-linejoin: round; }
+.nav-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; }
+.back-btn { 
+    color: #B8CCE4; 
+    font-size: 13px; 
+    text-decoration: none; 
+    padding: 6px 10px; 
+    border-radius: 6px; 
+    transition: background 0.2s; }
+.back-btn:hover { 
+    background: rgba(255,255,255,0.12); 
+    color: #fff; }
+.logout { 
+    color: #fff; 
+    background: rgba(255,255,255,0.15); 
+    border: none; 
+    padding: 6px 14px; 
+    border-radius: 6px; 
+    font-size: 13px; 
+    cursor: pointer; }
+.logout:hover { 
+    background: rgba(255,255,255,0.25); }
+
+/* ── Hero ── */
+.hero { 
+    background: linear-gradient(135deg, #1A3C6B 0%, #2E6DB4 100%); 
+    padding: 28px 32px 36px; }
+.hero h1 { 
+    color: #fff; 
+    font-size: 22px; 
+    font-weight: 700; 
+    margin-bottom: 4px; }
+.hero p { 
+    color: #B8CCE4; 
+    font-size: 13px; }
+
+/* ── Form Container ── */
+.form-container { 
+    padding: 0 32px 40px; 
+    margin-top: -20px; }
+.form-card { 
+    background: #fff; 
+    border-radius: 12px; 
+    border: 1px solid #E0E7EF; 
+    padding: 28px 32px; 
+    box-shadow: 0 2px 8px rgba(26,60,107,0.07); }
+
+/* ── Section Titles ── */
+.form-section { 
+    margin-bottom: 28px; }
+.form-section-title { 
+    font-size: 13px; 
+    font-weight: 700; 
+    color: #1A3C6B; 
+    text-transform: uppercase; 
+    letter-spacing: 0.06em; 
+    margin-bottom: 16px; 
+    padding-bottom: 8px; 
+    border-bottom: 1px solid #E0E7EF; }
+
+/* ── Grid Layouts ── */
+.grid-2 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 16px; }
+.grid-3 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 16px; }
+
+/* ── Form Fields ── */
+.form-row { 
+    display: flex; 
+    flex-direction: column; }
+label { 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: #6B7A8D; 
+    margin-bottom: 5px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; }
+input, select, textarea { 
+    width: 100%; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 10px 12px; 
+    font-size: 13px; 
+    color: #1A1A2E; 
+    background: #F8FAFD; 
+    outline: none; 
+    font-family: inherit; }
+input:focus, select:focus, textarea:focus { 
+    border-color: #2E6DB4; 
+    background: #fff; }
+textarea { 
+    resize: vertical; 
+    min-height: 90px; }
+
+/* ── Amenities ── */
+.amenities-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 10px; }
+.amenity-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    background: #F4F7FB; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 10px 12px; 
+    cursor: pointer; 
+    transition: all 0.2s; }
+.amenity-item input[type="checkbox"] { 
+    width: 16px; 
+    height: 16px; 
+    accent-color: #1A3C6B; 
+    cursor: pointer; }
+.amenity-item span { 
+    font-size: 13px; 
+    color: #1A1A2E; }
+.amenity-item:has(input:checked) { 
+    border-color: #2E6DB4; 
+    background: #EBF3FB; }
+
+/* ── Photo Upload ── */
+.upload-area { 
+    border: 2px dashed #D0DAE8; 
+    border-radius: 10px; 
+    padding: 32px; 
+    text-align: center; 
+    background: #F8FAFD; 
+    cursor: pointer; 
+    transition: border-color 0.2s; }
+.upload-area:hover { 
+    border-color: #2E6DB4; }
+.upload-icon { 
+    font-size: 32px; 
+    margin-bottom: 8px; }
+.upload-area p { 
+    font-size: 13px; 
+    color: #6B7A8D; }
+.upload-area span { 
+    font-size: 11px; 
+    color: #9AAAB8; 
+    display: block; 
+    margin-top: 4px; }
+
+/* ── Form Actions ── */
+.form-actions { 
+    display: flex; 
+    gap: 12px; 
+    justify-content: flex-end; 
+    margin-top: 8px; }
+.btn-cancel { 
+    background: #F4F7FB; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 11px 24px; 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: #6B7A8D; 
+    cursor: pointer; 
+    transition: background 0.2s; }
+.btn-cancel:hover { 
+    background: #E0E7EF; }
+.btn-save { 
+    background: #1A3C6B; 
+    border: none; 
+    border-radius: 8px; 
+    padding: 11px 28px; 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: #fff; 
+    cursor: pointer; 
+    transition: background 0.2s; }
+.btn-save:hover { 
+    background: #2E6DB4; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="nav-brand">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Pata Place
+  </div>
+  <div class="nav-right">
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+    <button class="logout">Log out</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Add New Property</h1>
+  <p>Fill in the details below to list your property for Strathmore students</p>
+</div>
+
+<!-- Form -->
+<div class="form-container">
+  <div class="form-card">
+
+    <!-- Basic Info -->
+    <div class="form-section">
+      <div class="form-section-title">Basic Information</div>
+      <div class="grid-2" style="margin-bottom: 16px;">
+        <div class="form-row">
+          <label>Property Name</label>
+          <input type="text" placeholder="e.g. Kilimani Studio Apartment" />
+        </div>
+        <div class="form-row">
+          <label>Property Type</label>
+          <select>
+            <option value="">Select type...</option>
+            <option>Bedsitter</option>
+            <option>Single Room</option>
+            <option>1 Bedroom</option>
+            <option>2 Bedroom</option>
+            <option>3 Bedroom</option>
+            <option>Shared Room</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Description</label>
+        <textarea placeholder="Describe the property, nearby amenities, distance from Strathmore..."></textarea>
+      </div>
+    </div>
+
+    <!-- Location & Pricing -->
+    <div class="form-section">
+      <div class="form-section-title">Location & Pricing</div>
+      <div class="grid-3" style="margin-bottom: 16px;">
+        <div class="form-row">
+          <label>Location / Estate</label>
+          <input type="text" placeholder="e.g. Kilimani, Nairobi" />
+        </div>
+        <div class="form-row">
+          <label>Distance from Campus</label>
+          <input type="text" placeholder="e.g. 1.2 km" />
+        </div>
+        <div class="form-row">
+          <label>Price per Month (KES)</label>
+          <input type="number" placeholder="e.g. 12000" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-row">
+          <label>Deposit (KES)</label>
+          <input type="number" placeholder="e.g. 24000" />
+        </div>
+        <div class="form-row">
+          <label>Bills</label>
+          <select>
+            <option value="">Select...</option>
+            <option>Included in rent</option>
+            <option>Excluded from rent</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Availability -->
+    <div class="form-section">
+      <div class="form-section-title">Availability</div>
+      <div class="grid-2">
+        <div class="form-row">
+          <label>Availability Status</label>
+          <select>
+            <option value="available">Available</option>
+            <option value="unavailable">Unavailable</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Date Available From</label>
+          <input type="date" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Amenities -->
+    <div class="form-section">
+      <div class="form-section-title">Amenities</div>
+      <div class="amenities-grid">
+        <label class="amenity-item"><input type="checkbox" /><span>📶 Wi-Fi</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>💧 Water</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>🔒 Security</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>🔋 Power Backup</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>🛋️ Furnished</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>🅿️ Parking</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>🏋️ Gym</span></label>
+        <label class="amenity-item"><input type="checkbox" /><span>🍳 Kitchen</span></label>
+      </div>
+    </div>
+
+    <!-- Photos -->
+    <div class="form-section">
+      <div class="form-section-title">Property Photos</div>
+      <div class="upload-area" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">📷</div>
+        <p>Click to upload or drag and drop photos</p>
+        <span>PNG, JPG up to 5MB each</span>
+        <input type="file" id="photoInput" multiple accept="image/*" style="display:none" />
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="window.location.href='dashboard.html'">Cancel</button>
+      <button class="btn-save">✓ Save Property Listing</button>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
