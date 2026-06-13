@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pata Place – User Profile</title>
+<style>
+* { 
+    box-sizing: border-box; 
+    margin: 0; padding: 0; 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+}
+body { 
+    background: #F4F7FB; 
+}
+.nav { 
+    background: #1A3C6B; 
+    padding: 0 28px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    height: 52px; 
+}
+.nav-brand { 
+    color: #fff; 
+    font-weight: 600; 
+    font-size: 15px; 
+}
+.nav-links { 
+    display: flex; 
+    gap: 24px; 
+    align-items: center; 
+}
+.nav-links a { 
+    color: rgba(255,255,255,0.75); 
+    font-size: 13px; 
+    text-decoration: none; 
+}
+.nav-links a.active { 
+    color: #fff; 
+    font-weight: 600; 
+}
+.nav-btn { 
+    background: #fff; 
+    color: #1A3C6B; 
+    border: none; 
+    border-radius: 20px; 
+    padding: 5px 16px; 
+    font-size: 12px; 
+    font-weight: 600; 
+}
+.content { 
+    max-width: 900px; 
+    margin: 28px auto; 
+    padding: 0 28px; 
+    display: grid; 
+    grid-template-columns: 240px 1fr; 
+    gap: 24px; 
+}
+.sidebar { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+}
+.profile-card { 
+    background: #fff; 
+    border-radius: 14px; 
+    border: 1px solid #E0E7EF; 
+    padding: 24px; 
+    text-align: center; 
+}
+.avatar { 
+    width: 68px; 
+    height: 68px; 
+    border-radius: 50%; 
+    background: #1A3C6B; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 24px; 
+    font-weight: 700; 
+    color: #fff; 
+    margin: 0 auto 12px; 
+}
+.profile-name { 
+    font-size: 16px; 
+    font-weight: 700; 
+    color: #1A1A2E; 
+}
+.profile-role { 
+    font-size: 12px; 
+    color: #6B7A8D; 
+    margin-top: 3px; 
+}
+.profile-badge { 
+    display: inline-block; 
+    background: #EAF3DE; 
+    color: #3B6D11; 
+    border-radius: 20px; 
+    padding: 3px 12px; 
+    font-size: 11px; 
+    font-weight: 700; 
+    margin-top: 10px; 
+}
+.stats-mini { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 8px; 
+    margin-top: 16px; 
+}
+.stat-mini { 
+    background: #F4F7FB; 
+    border-radius: 8px; 
+    padding: 10px; 
+    text-align: center; 
+}
+.stat-mini-val { 
+    font-size: 18px; 
+    font-weight: 700; 
+    color: #1A3C6B; 
+}
+.stat-mini-label { 
+    font-size: 10px; 
+    color: #6B7A8D; 
+    margin-top: 2px; 
+}
+.menu-card { 
+    background: #fff; 
+    border-radius: 14px; 
+    border: 1px solid #E0E7EF; 
+    overflow: hidden; 
+}
+.menu-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    padding: 12px 16px; 
+    font-size: 13px; 
+    color: #4A5568; 
+    cursor: pointer; 
+    border-bottom: 1px solid #F0F4F8; 
+}
+.menu-item:last-child {
+    border-bottom: none; 
+}
+.menu-item.active { 
+    background: #EBF3FB; 
+    color: #1A3C6B; 
+    font-weight: 700; 
+}
+.menu-item .m-icon { 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 8px; 
+    background: #F4F7FB; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 15px; 
+}
+.menu-item.active .m-icon { 
+    background: #D0E6F8; 
+}
+.menu-item.danger { 
+    color: #A32D2D; 
+}
+.main-card { 
+    background: #fff; 
+    border-radius: 14px; 
+    border: 1px solid #E0E7EF; 
+    overflow: hidden; 
+}
+.main-header { 
+    background: linear-gradient(135deg, #1A3C6B, #2E6DB4); 
+    padding: 20px 24px; 
+    color: #fff; 
+}
+.main-header h2 { 
+    font-size: 17px; 
+    font-weight: 700; 
+}
+.main-header p { 
+    font-size: 12px; 
+    opacity: 0.8; 
+    margin-top: 3px; 
+}
+.main-body { 
+    padding: 24px; 
+}
+.section-title { 
+    font-size: 12px; 
+    font-weight: 700; 
+    color: #6B7A8D; 
+    text-transform: uppercase; 
+    letter-spacing: 0.06em; 
+    margin: 20px 0 12px; 
+    padding-bottom: 8px; 
+    border-bottom: 1px solid #E0E7EF; 
+}
+.section-title:first-child { 
+    margin-top: 0; 
+}
+.grid-2 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 14px; 
+}
+.form-row { 
+    margin-bottom: 14px; 
+}
+label { 
+    display: block; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: #6B7A8D; 
+    margin-bottom: 5px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+}
+input, select { 
+    width: 100%; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 10px 12px; 
+    font-size: 13px; 
+    color: #1A1A2E; 
+    background: #F8FAFD; 
+}
+input[readonly] { 
+    background: #EFF2F6; 
+    color: #6B7A8D; 
+}
+.btn-save { 
+    background: #1A3C6B; 
+    color: #fff; 
+    border: none; 
+    border-radius: 8px; 
+    padding: 11px 28px; 
+    font-size: 13px; 
+    font-weight: 700; 
+    cursor: pointer; 
+}
+.btn-cancel { 
+    background: transparent; 
+    color: #6B7A8D; 
+    border: 1px solid #D0DAE8; 
+    border-radius: 8px; 
+    padding: 11px 20px; 
+    font-size: 13px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    margin-right: 10px; 
+}
+.info-banner { 
+    background: #EBF3FB; 
+    border-left: 4px solid #2E6DB4; 
+    border-radius: 0 8px 8px 0; 
+    padding: 12px 16px; 
+    margin-bottom: 20px; 
+    font-size: 13px; 
+    color: #1A3C6B; 
+}
+.saved-properties { 
+    margin-top: 8px; 
+}
+.saved-row { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    padding: 10px 0; 
+    border-bottom: 1px solid #F0F4F8; 
+}
+.saved-icon { 
+    width: 38px; 
+    height: 38px; 
+    background: #D0DAE8; 
+    border-radius: 8px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 18px; 
+    flex-shrink: 0; 
+}
+.saved-name { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: #1A1A2E; 
+}
+.saved-loc { 
+    font-size: 11px; 
+    color: #6B7A8D; 
+    margin-top: 2px; 
+}
+.saved-price { 
+    margin-left: auto; 
+    font-size: 13px; 
+    font-weight: 700; 
+    color: #1A3C6B; 
+}
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="nav-brand">🏠 Pata PLace</div>
+  <div class="nav-links">
+    <a href="dashboard.html">Browse</a>
+    <a href="requests.html">My Requests</a>
+    <a href="#">Notifications</a>
+    <a href="userprofile.html" class="active">Profile</a>
+    <button class="nav-btn">Logout</button>
+  </div>
+</div>
+<div class="content">
+  <div class="sidebar">
+    <div class="profile-card">
+      <div class="avatar">AW</div>
+      <div class="profile-name">Alice Wanjiku</div>
+      <div class="profile-role">a.wanjiku@strathmore.edu</div>
+      <div class="profile-badge">✓ Active Student</div>
+      <div class="stats-mini">
+        <div class="stat-mini"><div class="stat-mini-val">5</div><div class="stat-mini-label">Requests</div></div>
+        <div class="stat-mini"><div class="stat-mini-val">3</div><div class="stat-mini-label">Saved</div></div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-item active"><div class="m-icon">👤</div>Edit Profile</div>
+      <div class="menu-item"><div class="m-icon">🔒</div>Change Password</div>
+      <div class="menu-item"><div class="m-icon">🔔</div>Notifications</div>
+      <div class="menu-item"><div class="m-icon">🤍</div>Saved Properties</div>
+      <div class="menu-item danger"><div class="m-icon">🚪</div>Logout</div>
+    </div>
+  </div>
+  <div class="main-card">
+    <div class="main-header">
+      <h2>Edit Profile</h2>
+      <p>Update your personal information and account settings</p>
+    </div>
+    <div class="main-body">
+      <div class="info-banner">ℹ️ Your email address is linked to your Strathmore University account and cannot be changed here.</div>
+      <div class="section-title">Personal Information</div>
+      <div class="grid-2">
+        <div class="form-row"><label>Full Name</label><input type="text" value="Alice Wanjiku" /></div>
+        <div class="form-row"><label>Email Address</label><input type="email" value="a.wanjiku@strathmore.edu" readonly /></div>
+        <div class="form-row"><label>Phone Number</label><input type="tel" placeholder="+254 7XX XXX XXX" value="+254 712 000 111" /></div>
+        <div class="form-row"><label>Year of Study</label><select><option>Year 1</option><option>Year 2</option><option selected>Year 3</option><option>Year 4</option><option>Postgraduate</option></select></div>
+      </div>
+      <div class="form-row"><label>Faculty / School</label><input type="text" value="School of Computing and Engineering Sciences" /></div>
+      <div class="grid-2">
+        <div class="form-row"><label>Student ID</label><input type="text" value="123456/2024" readonly /></div>
+        <div class="form-row"><label>Programme</label><input type="text" placeholder="e.g. BSc Computer Science" value="BSc Information Technology" /></div>
+      </div>
+
+      <div class="section-title">Saved Properties</div>
+      <div class="saved-properties">
+        <div class="saved-row"><div class="saved-icon">🏠</div><div><div class="saved-name">Kilimani Studio Apartment</div><div class="saved-loc">📍 Kilimani · 1.2km</div></div><div class="saved-price">KES 12,000</div></div>
+        <div class="saved-row"><div class="saved-icon">🏠</div><div><div class="saved-name">Adams Arcade Bedsitter</div><div class="saved-loc">📍 Adams Arcade · 0.8km</div></div><div class="saved-price">KES 8,000</div></div>
+        <div class="saved-row"><div class="saved-icon">🏠</div><div><div class="saved-name">Ngong Road Studio</div><div class="saved-loc">📍 Ngong Road · 1.8km</div></div><div class="saved-price">KES 10,500</div></div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <button class="btn-cancel">Discard Changes</button>
+        <button class="btn-save">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
