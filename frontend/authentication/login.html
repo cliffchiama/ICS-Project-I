@@ -12,11 +12,10 @@
     padding: 0; 
     font-family: 'Segoe UI', Arial, sans-serif; }
 body { 
-    body { 
     background: #F4F7FB; 
     height: 100vh; 
     display: flex; 
-    flex-direction: column; } }
+    flex-direction: column; }
 .main { 
     flex: 1;
     display: flex;
@@ -207,12 +206,12 @@ input:focus, select:focus {
         <div class="form-row"><label>Email Address</label><input type="email" placeholder="you@strathmore.edu" /></div>
         <div class="form-row"><label>Password</label><input type="password" placeholder="••••••••" /></div>
         <div class="forgot">Forgot password?</div>
-        <button class="submit-btn" onclick="window.location.href='../student/dashboard.html'">Sign In</button>
+        <button class="submit-btn" onclick="handleSignIn()">Sign In</button>
         <div class="divider">or sign in as</div>
         <div class="role-btns">
-          <div class="role-btn selected" onclick="selectRole(this)"><span class="icon">🎓</span>Student</div>
-          <div class="role-btn" onclick="selectRole(this)"><span class="icon">🏠</span>Landlord</div>
-          <div class="role-btn" onclick="selectRole(this)"><span class="icon">🛡️</span>Admin</div>
+          <div class="role-btn selected" data-role="student" onclick="selectRole(this)"><span class="icon">🎓</span>Student</div>
+          <div class="role-btn" data-role="landlord" onclick="selectRole(this)"><span class="icon">🏠</span>Landlord</div>
+          <div class="role-btn" data-role="admin" onclick="selectRole(this)"><span class="icon">🛡️</span>Admin</div>
         </div>
       </div>
 
@@ -233,14 +232,18 @@ input:focus, select:focus {
             <option value="landlord">Landlord</option>
           </select>
         </div>
-        <button class="submit-btn" onclick="window.location.href='../student/dashboard.html'">Create Account</button>
+        <button class="submit-btn" onclick="handleRegister()">Create Account</button>
       </div>
 
     </div>
   </div>
 </div>
 
+//JavaScript!
+
 <script>
+    let selectedRole = 'student';
+
   function switchTab(tab) {
     document.querySelectorAll('.tab').forEach((t, i) => {
       t.classList.toggle('active', (i === 0 && tab === 'signin') || (i === 1 && tab === 'register'));
@@ -252,7 +255,25 @@ input:focus, select:focus {
   function selectRole(el) {
     document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
     el.classList.add('selected');
+    selectedRole = el.getAttribute('data-role');
   }
+  function handleSignIn() {
+  if (selectedRole === 'student') {
+    window.location.href = '../student/dashboard.html';
+  } else if (selectedRole === 'landlord') {
+    window.location.href = '../landlord/dashboard.html';
+  } else if (selectedRole === 'admin') {
+    window.location.href = '../admin/dashboard.html';
+  }
+  }
+  function handleRegister() {
+  const role = document.querySelector('#register select').value;
+  if (role === 'student') {
+    window.location.href = '../student/dashboard.html';
+  } else if (role === 'landlord') {
+    window.location.href = '../landlord/dashboard.html';
+  }
+}
 </script>
 
 </body>
