@@ -257,15 +257,43 @@ input:focus, select:focus {
     el.classList.add('selected');
     selectedRole = el.getAttribute('data-role');
   }
-  function handleSignIn() {
-  if (selectedRole === 'student') {
-    window.location.href = '../student/dashboard.html';
-  } else if (selectedRole === 'landlord') {
-    window.location.href = '../landlord/dashboard.html';
-  } else if (selectedRole === 'admin') {
-    window.location.href = '../admin/dashboard.html';
-  }
-  }
+  async function handleSignIn() {
+    const email = document.querySelector('#signin input[type="email"]').value;
+    const password = document.querySelector('#signin input[type="password"]').value;
+
+    if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
+            if (data.user.role === 'student') {
+                navigateTo('../student/dashboard.html');
+            } else if (data.user.role === 'landlord') {
+                navigateTo('../landlord/dashboard.html');
+            } else if (data.user.role === 'admin') {
+                navigateTo('../admin/dashboard.html');
+            }
+        } else {
+            alert(data.message);
+        }
+
+    } catch (error) {
+        alert('Could not connect to server. Make sure the backend is running.');
+    }
+}
   function handleRegister() {
   const role = document.querySelector('#register select').value;
   if (role === 'student') {

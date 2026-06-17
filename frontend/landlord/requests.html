@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pata Place – Viewing Requests</title>
+<link rel="icon" type="image/png" href="../assets/headicon.png">
+<style>
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Arial, sans-serif; }
+body { 
+    background: #F4F7FB; 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; }
+
+/* ── Navbar ── */
+.nav { 
+    background: #1A3C6B; 
+    padding: 0 32px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    height: 52px; }
+.nav-brand { 
+    color: #fff; 
+    font-weight: 600; 
+    font-size: 16px; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; }
+.nav-brand svg { 
+    width: 20px; 
+    height: 20px; 
+    fill: none; 
+    stroke: #fff; 
+    stroke-width: 2; 
+    stroke-linecap: round; 
+    stroke-linejoin: round; }
+.nav-links { 
+    display: flex; 
+    align-items: center; 
+    gap: 6px; }
+.nav-links a { 
+    color: #B8CCE4; 
+    font-size: 13px; 
+    text-decoration: none; 
+    padding: 6px 10px; 
+    border-radius: 6px; 
+    transition: background 0.2s; }
+.nav-links a:hover, .nav-links a.active { 
+    background: rgba(255,255,255,0.12); 
+    color: #fff; }
+.nav-links .logout { 
+    color: #fff; 
+    background: rgba(255,255,255,0.15); 
+    border: none; 
+    padding: 6px 14px; 
+    border-radius: 6px; 
+    font-size: 13px; 
+    cursor: pointer; }
+.nav-links .logout:hover { 
+    background: rgba(255,255,255,0.25); }
+
+/* ── Hero ── */
+.hero { 
+    background: linear-gradient(135deg, #1A3C6B 0%, #2E6DB4 100%); 
+    padding: 28px 32px 36px; }
+.hero h1 { 
+    color: #fff; 
+    font-size: 22px; 
+    font-weight: 700; 
+    margin-bottom: 4px; }
+.hero p { 
+    color: #B8CCE4; 
+    font-size: 13px; }
+
+/* ── Stats Row ── */
+.stats-row { 
+    display: flex; 
+    gap: 16px; 
+    padding: 0 32px; 
+    margin-top: -20px; 
+    margin-bottom: 24px; }
+.stat-card { 
+    flex: 1; 
+    background: #fff; 
+    border-radius: 10px; 
+    border: 1px solid #E0E7EF; 
+    padding: 16px 20px; 
+    box-shadow: 0 2px 8px rgba(26,60,107,0.07); }
+.stat-value { 
+    font-size: 24px; 
+    font-weight: 700; 
+    color: #1A3C6B; }
+.stat-label { 
+    font-size: 11px; 
+    color: #6B7A8D; 
+    margin-top: 2px; }
+.stat-sub { 
+    font-size: 10px; 
+    color: #2E6DB4; 
+    margin-top: 4px; }
+
+/* ── Content ── */
+.content { 
+    padding: 0 32px 32px; }
+.section-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 14px; }
+.section-header h2 { 
+    font-size: 16px; 
+    font-weight: 600; 
+    color: #1A1A2E; }
+
+/* ── Filter Tabs ── */
+.filter-tabs { 
+    display: flex; 
+    gap: 8px; }
+.filter-tab { 
+    font-size: 12px; 
+    font-weight: 600; 
+    padding: 6px 14px; 
+    border-radius: 20px; 
+    border: 1px solid #D0DAE8; 
+    background: #fff; 
+    color: #6B7A8D; 
+    cursor: pointer; 
+    transition: all 0.2s; }
+.filter-tab.active { 
+    background: #1A3C6B; 
+    color: #fff; 
+    border-color: #1A3C6B; }
+.filter-tab:hover:not(.active) { 
+    background: #F4F7FB; }
+
+/* ── Table ── */
+.table-wrap { 
+    background: #fff; 
+    border-radius: 12px; 
+    border: 1px solid #E0E7EF; 
+    overflow: hidden; 
+    box-shadow: 0 2px 8px rgba(26,60,107,0.05); }
+table { 
+    width: 100%; 
+    border-collapse: collapse; }
+thead { 
+    background: #F4F7FB; }
+th { 
+    text-align: left; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: #6B7A8D; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    padding: 12px 16px; 
+    border-bottom: 1px solid #E0E7EF; }
+td { 
+    padding: 14px 16px; 
+    font-size: 13px; 
+    color: #1A1A2E; 
+    border-bottom: 1px solid #F0F4F8; }
+tr:last-child td { 
+    border-bottom: none; }
+tr:hover td { 
+    background: #FAFBFD; }
+.student-name { 
+    font-weight: 600; 
+    color: #1A3C6B; }
+.student-email { 
+    font-size: 11px; 
+    color: #6B7A8D; 
+    margin-top: 2px; }
+.prop-name { 
+    font-weight: 500; }
+.prop-type { 
+    font-size: 11px; 
+    color: #6B7A8D; 
+    margin-top: 2px; }
+
+/* ── Badges ── */
+.badge { 
+    display: inline-block; 
+    font-size: 10px; 
+    font-weight: 700; 
+    padding: 3px 10px; 
+    border-radius: 20px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; }
+.badge.approved { 
+    background: #D1FAE5; 
+    color: #065F46; }
+.badge.pending { 
+    background: #FEF3C7; 
+    color: #92400E; }
+.badge.cancelled { 
+    background: #FEE2E2; 
+    color: #991B1B; }
+
+/* ── Action Buttons ── */
+.actions { 
+    display: flex; 
+    gap: 8px; }
+.btn-approve { 
+    background: #D1FAE5; 
+    border: none; 
+    border-radius: 6px; 
+    padding: 6px 12px; 
+    font-size: 12px; 
+    font-weight: 600; 
+    color: #065F46; 
+    cursor: pointer; }
+.btn-approve:hover { 
+    background: #A7F3D0; }
+.btn-decline { 
+    background: #FEE2E2; 
+    border: none; 
+    border-radius: 6px; 
+    padding: 6px 12px; 
+    font-size: 12px; 
+    font-weight: 600; 
+    color: #991B1B; 
+    cursor: pointer; }
+.btn-decline:hover { 
+    background: #FECACA; }
+.btn-disabled { 
+    background: #F4F7FB; 
+    border: none; 
+    border-radius: 6px; 
+    padding: 6px 12px; 
+    font-size: 12px; 
+    font-weight: 600; 
+    color: #9AAAB8; 
+    cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="nav-brand">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Pata Place
+  </div>
+  <div class="nav-links">
+    <a href="dashboard.html">My Properties</a>
+    <a href="#" class="active">Requests</a>
+    <a href="#">Notifications</a>
+    <a href="#">Profile</a>
+    <button class="logout">Log out</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Viewing Requests</h1>
+  <p>Manage requests from students interested in your properties</p>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-value">7</div>
+    <div class="stat-label">Total Requests</div>
+    <div class="stat-sub">Across all properties</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Pending</div>
+    <div class="stat-sub">Awaiting your response</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Approved</div>
+    <div class="stat-sub">This month</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">1</div>
+    <div class="stat-label">Cancelled</div>
+    <div class="stat-sub">By students</div>
+  </div>
+</div>
+
+<!-- Requests Table -->
+<div class="content">
+  <div class="section-header">
+    <h2>All Requests</h2>
+    <div class="filter-tabs">
+      <div class="filter-tab active">All</div>
+      <div class="filter-tab">Pending</div>
+      <div class="filter-tab">Approved</div>
+      <div class="filter-tab">Cancelled</div>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Property</th>
+          <th>Requested Date</th>
+          <th>Viewing Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="student-name">Alice Wanjiku</div>
+            <div class="student-email">a.wanjiku@strathmore.edu</div>
+          </td>
+          <td>
+            <div class="prop-name">Kilimani Studio</div>
+            <div class="prop-type">Bedsitter</div>
+          </td>
+          <td>May 25, 2026</td>
+          <td>Jun 4, 2026</td>
+          <td><span class="badge pending">Pending</span></td>
+          <td class="actions">
+            <button class="btn-approve">Approve</button>
+            <button class="btn-decline">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-name">Brian Otieno</div>
+            <div class="student-email">b.otieno@strathmore.edu</div>
+          </td>
+          <td>
+            <div class="prop-name">Madaraka Bedsitter</div>
+            <div class="prop-type">Bedsitter</div>
+          </td>
+          <td>May 28, 2026</td>
+          <td>Jun 6, 2026</td>
+          <td><span class="badge pending">Pending</span></td>
+          <td class="actions">
+            <button class="btn-approve">Approve</button>
+            <button class="btn-decline">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-name">Carol Muthoni</div>
+            <div class="student-email">c.muthoni@strathmore.edu</div>
+          </td>
+          <td>
+            <div class="prop-name">Lavington 1BR</div>
+            <div class="prop-type">1 Bedroom</div>
+          </td>
+          <td>May 20, 2026</td>
+          <td>May 30, 2026</td>
+          <td><span class="badge approved">Approved</span></td>
+          <td class="actions">
+            <button class="btn-disabled">Approve</button>
+            <button class="btn-disabled">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-name">David Kamau</div>
+            <div class="student-email">d.kamau@strathmore.edu</div>
+          </td>
+          <td>
+            <div class="prop-name">Kilimani Studio</div>
+            <div class="prop-type">Bedsitter</div>
+          </td>
+          <td>May 15, 2026</td>
+          <td>May 22, 2026</td>
+          <td><span class="badge cancelled">Cancelled</span></td>
+          <td class="actions">
+            <button class="btn-disabled">Approve</button>
+            <button class="btn-disabled">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-name">Eve Njeri</div>
+            <div class="student-email">e.njeri@strathmore.edu</div>
+          </td>
+          <td>
+            <div class="prop-name">Siwaka Single Room</div>
+            <div class="prop-type">Single Room</div>
+          </td>
+          <td>Jun 1, 2026</td>
+          <td>Jun 10, 2026</td>
+          <td><span class="badge pending">Pending</span></td>
+          <td class="actions">
+            <button class="btn-approve">Approve</button>
+            <button class="btn-decline">Decline</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
