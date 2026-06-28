@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../assets/headicon.png">
+<title>Pata Place – Student Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+body { background: #F4F7FB; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.nav { background: #1A3C6B; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-brand { color: #fff; font-weight: 600; font-size: 15px; }
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.75); font-size: 13px; text-decoration: none; }
+.nav-links a.active { color: #fff; font-weight: 600; }
+.nav-btn { background: #fff; color: #1A3C6B; border: none; border-radius: 20px; padding: 5px 16px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+.hero { background: linear-gradient(135deg, #1A3C6B 0%, #2E6DB4 100%); padding: 40px 28px; color: #fff; }
+.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.hero p { font-size: 14px; opacity: 0.85; margin-bottom: 24px; }
+
+.search-bar { background: #fff; border-radius: 10px; padding: 10px 14px; display: flex; gap: 10px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.search-bar input { flex: 1; border: none; outline: none; font-size: 13px; color: #333; }
+.search-bar select { border: none; font-size: 13px; color: #555; background: transparent; padding: 0 8px; border-left: 1px solid #E0E7EF; }
+.search-bar button { background: #1A3C6B; color: #fff; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+.stats-row { display: flex; gap: 32px; margin-top: 24px; }
+.stat-n { font-size: 22px; font-weight: 700; }
+.stat-l { font-size: 12px; opacity: 0.75; }
+
+.section-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 28px 12px; }
+.section-header h3 { font-size: 16px; font-weight: 600; color: #1A1A2E; }
+
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 28px 28px; }
+
+.prop-card { background: #fff; border-radius: 12px; border: 1px solid #E0E7EF; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.prop-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.10); }
+
+.prop-img { height: 130px; background: linear-gradient(135deg, #D0DAE8, #B8C9DC); display: flex; align-items: center; justify-content: center; position: relative; }
+.prop-img svg { width: 44px; height: 44px; fill: #8FA5C0; }
+.badge { position: absolute; top: 10px; right: 10px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge.avail { background: #EAF3DE; color: #3B6D11; }
+.badge.pend { background: #FAEEDA; color: #854F0B; }
+
+.prop-body { padding: 14px; }
+.prop-name { font-size: 14px; font-weight: 600; color: #1A1A2E; margin-bottom: 4px; }
+.prop-loc { font-size: 12px; color: #6B7A8D; margin-bottom: 10px; }
+.prop-price { font-size: 16px; font-weight: 700; color: #1A3C6B; margin-bottom: 12px; }
+.prop-price span { font-size: 11px; font-weight: 400; color: #6B7A8D; }
+.btn-view { width: 100%; background: #1A3C6B; color: #fff; border: none; border-radius: 7px; padding: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.btn-view:hover { background: #2E6DB4; }
+
+/* States */
+.state-box { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #6B7A8D; }
+.state-box div { font-size: 40px; margin-bottom: 12px; }
+.state-box p { font-size: 14px; }
+.spinner { width: 32px; height: 32px; border: 3px solid #E0E7EF; border-top-color: #1A3C6B; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="nav-brand">🏠 Pata Place</div>
+  <div class="nav-links">
+    <a href="#" class="active">Browse</a>
+    <a href="requests.html">My Requests</a>
+    <a href="#">Notifications</a>
+    <a href="userprofile.html">Profile</a>
+    <button class="nav-btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>Find your perfect home near Strathmore</h1>
+  <p>Browse verified listings within 5km of campus</p>
+  <div class="search-bar">
+    <span style="color:#999;">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search by location, property name..." oninput="filterProperties()" />
+    <select id="typeFilter" onchange="filterProperties()" style="border:none;font-size:13px;color:#555;background:transparent;padding:0 8px;border-left:1px solid #E0E7EF;">
+      <option value="">All types</option>
+      <option value="Bedsitter">Bedsitter</option>
+      <option value="Single Room">Single Room</option>
+      <option value="1 Bedroom">1 Bedroom</option>
+      <option value="2 Bedroom">2 Bedroom</option>
+      <option value="3 Bedroom">3 Bedroom</option>
+    </select>
+    <select id="priceFilter" onchange="filterProperties()" style="border:none;font-size:13px;color:#555;background:transparent;padding:0 8px;border-left:1px solid #E0E7EF;">
+      <option value="">Any price</option>
+      <option value="under10">Under KES 10k</option>
+      <option value="10to20">KES 10k–20k</option>
+      <option value="above20">Above KES 20k</option>
+    </select>
+    <button onclick="filterProperties()">Search</button>
+  </div>
+  <div class="stats-row">
+    <div><div class="stat-n" id="totalCount">–</div><div class="stat-l">Total Listings</div></div>
+    <div><div class="stat-n" id="availCount">–</div><div class="stat-l">Available Now</div></div>
+    <div><div class="stat-n" id="avgDistance">–</div><div class="stat-l">Avg Distance</div></div>
+  </div>
+</div>
+
+<div class="section-header">
+  <h3>Available Properties</h3>
+</div>
+
+<div class="cards-grid" id="cardsGrid">
+  <div class="state-box">
+    <div class="spinner"></div>
+    <p>Loading properties...</p>
+  </div>
+</div>
+
+<script>
+  let allProperties = [];
+
+  const gradients = [
+    'linear-gradient(135deg,#D0DAE8,#B8C9DC)',
+    'linear-gradient(135deg,#C9D8E8,#A8BDD4)',
+    'linear-gradient(135deg,#C8D5E5,#B0C3D6)',
+    'linear-gradient(135deg,#D0D8E5,#B8C5D2)',
+    'linear-gradient(135deg,#D5DAE8,#C0C8D5)',
+    'linear-gradient(135deg,#C5D2E0,#ADC0CE)'
+  ];
+
+  // ── Fetch properties from backend ──────────────────────────────
+  async function loadProperties() {
+    try {
+      const response = await fetch('http://localhost:5000/api/properties');
+      if (!response.ok) throw new Error('Failed to load');
+      allProperties = await response.json();
+      renderCards(allProperties);
+      updateStats(allProperties);
+    } catch (err) {
+      document.getElementById('cardsGrid').innerHTML = `
+        <div class="state-box">
+          <div>⚠️</div>
+          <p>Could not load properties. Make sure the backend is running.</p>
+        </div>`;
+    }
+  }
+
+  // ── Update hero stats ──────────────────────────────────────────
+  function updateStats(list) {
+    document.getElementById('totalCount').textContent = list.length;
+    document.getElementById('availCount').textContent = list.filter(p => p.availability_status === 'available').length;
+
+    // Average distance — parse numeric part from "1.2 km"
+    const distances = list
+      .map(p => parseFloat(p.distance_from_campus))
+      .filter(n => !isNaN(n));
+    const avg = distances.length
+      ? (distances.reduce((a, b) => a + b, 0) / distances.length).toFixed(1) + ' km'
+      : '–';
+    document.getElementById('avgDistance').textContent = avg;
+  }
+
+  // ── Render cards ───────────────────────────────────────────────
+  function renderCards(list) {
+    const grid = document.getElementById('cardsGrid');
+    if (list.length === 0) {
+      grid.innerHTML = `
+        <div class="state-box">
+          <div>🏠</div>
+          <p>No properties match your search. Try different filters.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = list.map((p, i) => {
+      const isAvail = p.availability_status === 'available';
+      const badgeClass = isAvail ? 'avail' : 'pend';
+      const badgeLabel = isAvail ? 'Available' : 'Pending';
+
+      return `
+        <div class="prop-card">
+          <div class="prop-img" style="background:${gradients[i % gradients.length]}">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="badge ${badgeClass}">${badgeLabel}</span>
+          </div>
+          <div class="prop-body">
+            <div class="prop-name">${p.property_name}</div>
+            <div class="prop-loc">📍 ${p.location}, ${p.distance_from_campus}</div>
+            <div class="prop-price">KES ${Number(p.price).toLocaleString()} <span>/ month</span></div>
+            <button class="btn-view" onclick="viewProperty('${p._id}')">View Property</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── Filter ─────────────────────────────────────────────────────
+  function filterProperties() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const type  = document.getElementById('typeFilter').value;
+    const price = document.getElementById('priceFilter').value;
+
+    const filtered = allProperties.filter(p => {
+      const matchSearch = !query ||
+        p.property_name.toLowerCase().includes(query) ||
+        p.location.toLowerCase().includes(query);
+      const matchType  = !type  || p.property_type === type;
+      const matchPrice = !price ||
+        (price === 'under10' && p.price < 10000) ||
+        (price === '10to20'  && p.price >= 10000 && p.price <= 20000) ||
+        (price === 'above20' && p.price > 20000);
+      return matchSearch && matchType && matchPrice;
+    });
+
+    updateStats(filtered);
+    renderCards(filtered);
+  }
+
+  // ── Navigate to property detail ────────────────────────────────
+  function viewProperty(id) {
+    const prop = allProperties.find(p => p._id === id);
+    sessionStorage.setItem('selectedProperty', JSON.stringify(prop));
+    document.body.style.transition = 'opacity 0.3s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = 'propertyview.html'; }, 300);
+  }
+
+  // ── Logout ─────────────────────────────────────────────────────
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    document.body.style.transition = 'opacity 0.3s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = '../authentication/login.html'; }, 300);
+  }
+
+  // ── Boot ───────────────────────────────────────────────────────
+  loadProperties();
+</script>
+</body>
+</html>

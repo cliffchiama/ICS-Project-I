@@ -6,184 +6,47 @@
 <link rel="icon" type="image/png" href="../assets/headicon.png">
 <title>Pata Place – Sign In</title>
 <style>
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-    font-family: 'Segoe UI', Arial, sans-serif; }
-body { 
-    background: #F4F7FB; 
-    height: 100vh; 
-    display: flex; 
-    flex-direction: column; }
-.main { 
-    flex: 1;
-    display: flex;
-    align-items: stretch; }
-.left-panel {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('../assets/logo.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 450px;
-    background-color: #E8EEF7; }
-.right-panel {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 32px;
-    background: #fff;
-    box-shadow: -4px 0 24px rgba(26,60,107,0.08);
-    overflow-y: auto;}
-.card {
-    width: 100%;
-    max-width: 380px;
-    border: none;
-    box-shadow: none;
-    padding: 0; }
-.logo-area {
-    text-align: center; 
-    margin-bottom: 24px; }
-.logo-icon { 
-    width: 56px; 
-    height: 56px; 
-    background: #1A3C6B; 
-    border-radius: 14px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    margin: 0 auto 12px; }
-.logo-icon svg { 
-    width: 28px; 
-    height: 28px; 
-    fill: none; 
-    stroke: #fff; 
-    stroke-width: 2; 
-    stroke-linecap: round; 
-    stroke-linejoin: round; }
-h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1A3C6B; 
-    margin-bottom: 4px; }
-.sub {
-    font-size: 13px; 
-    color: #6B7A8D; }
-.tabs { 
-    display: flex; 
-    border-bottom: 1px solid #E0E7EF; 
-    margin-bottom: 20px; }
-.tab { 
-    flex: 1; 
-    text-align: center; 
-    padding: 10px; 
-    font-size: 14px; 
-    cursor: pointer; 
-    color: #6B7A8D; 
-    border-bottom: 2.5px solid transparent; 
-    transition: all 0.2s; }
-.tab.active { 
-    color: #1A3C6B; 
-    border-bottom: 2.5px solid #1A3C6B; 
-    font-weight: 600; }
-.form-panel {
-    display: none; }
-.form-panel.active { 
-    display: block; }
-.form-row { 
-    margin-bottom: 14px; }
-label {
-    display: block; 
-    font-size: 11px; 
-    font-weight: 600; 
-    color: #6B7A8D; 
-    margin-bottom: 5px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em; }
-input, select {
-    width: 100%; 
-    border: 1px solid #D0DAE8; 
-    border-radius: 8px; 
-    padding: 10px 12px; 
-    font-size: 13px; 
-    color: #1A1A2E; 
-    background: #F8FAFD; 
-    outline: none; }
-input:focus, select:focus {
-    border-color: #2E6DB4; 
-    background: #fff; }
-.forgot {
-    font-size: 11px; 
-    color: #2E6DB4; 
-    text-align: right; 
-    margin: -8px 0 16px; 
-    cursor: pointer; }
-.submit-btn {
-    width: 100%; 
-    background: #1A3C6B; 
-    color: #fff; 
-    border: none; 
-    border-radius: 8px; 
-    padding: 12px; 
-    font-size: 14px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    transition: background 0.2s; }
-.submit-btn:hover {
-    background: #2E6DB4; }
-.divider {
-    text-align: center; 
-    font-size: 11px; 
-    color: #6B7A8D; 
-    margin: 16px 0; 
-    position: relative; }
-.divider::before, .divider::after {
-    content:''; 
-    position: absolute; 
-    top: 50%; 
-    width: 38%; 
-    height: 1px; 
-    background: #E0E7EF; }
-.divider::before {
-    left: 0; } 
-.divider::after {
-    right: 0; }
-.role-btns {
-    display: flex; 
-    gap: 10px; }
-.role-btn {
-    flex: 1; 
-    background: #F4F7FB; 
-    border: 1px solid #D0DAE8; 
-    border-radius: 8px; 
-    padding: 10px 6px; 
-    text-align: center; 
-    cursor: pointer; 
-    font-size: 11px; 
-    color: #6B7A8D; 
-    transition: all 0.2s; }
-.role-btn.selected {
-    border-color: #2E6DB4; 
-    color: #1A3C6B; 
-    background: #EBF3FB; 
-    font-weight: 600; }
-.role-btn .icon { 
-    font-size: 20px; 
-    display: block; 
-    margin-bottom: 4px; }
-.form-row-half {
-    display: flex; 
-    gap: 10px; }
-.form-row-half .form-row {
-    flex: 1; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+body { background: #F4F7FB; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.main { flex: 1; display: flex; align-items: stretch; }
+.left-panel { flex: 1; display: flex; align-items: center; justify-content: center; background-image: url('../assets/logo.png'); background-repeat: no-repeat; background-position: center; background-size: 450px; background-color: #E8EEF7; }
+.right-panel { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 32px; background: #fff; box-shadow: -4px 0 24px rgba(26,60,107,0.08); overflow-y: auto; }
+.card { width: 100%; max-width: 380px; border: none; box-shadow: none; padding: 0; }
+.logo-area { text-align: center; margin-bottom: 24px; }
+.logo-icon { width: 56px; height: 56px; background: #1A3C6B; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.logo-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+h2 { font-size: 18px; font-weight: 600; color: #1A3C6B; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #6B7A8D; }
+.tabs { display: flex; border-bottom: 1px solid #E0E7EF; margin-bottom: 20px; }
+.tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; cursor: pointer; color: #6B7A8D; border-bottom: 2.5px solid transparent; transition: all 0.2s; }
+.tab.active { color: #1A3C6B; border-bottom: 2.5px solid #1A3C6B; font-weight: 600; }
+.form-panel { display: none; }
+.form-panel.active { display: block; }
+.form-row { margin-bottom: 14px; }
+label { display: block; font-size: 11px; font-weight: 600; color: #6B7A8D; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+input, select { width: 100%; border: 1px solid #D0DAE8; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #1A1A2E; background: #F8FAFD; outline: none; }
+input:focus, select:focus { border-color: #2E6DB4; background: #fff; }
+.forgot { font-size: 11px; color: #2E6DB4; text-align: right; margin: -8px 0 16px; cursor: pointer; }
+.submit-btn { width: 100%; background: #1A3C6B; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.submit-btn:hover { background: #2E6DB4; }
+.submit-btn:disabled { background: #9AAAB8; cursor: not-allowed; }
+.divider { text-align: center; font-size: 11px; color: #6B7A8D; margin: 16px 0; position: relative; }
+.divider::before, .divider::after { content:''; position: absolute; top: 50%; width: 38%; height: 1px; background: #E0E7EF; }
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+.role-btns { display: flex; gap: 10px; }
+.role-btn { flex: 1; background: #F4F7FB; border: 1px solid #D0DAE8; border-radius: 8px; padding: 10px 6px; text-align: center; cursor: pointer; font-size: 11px; color: #6B7A8D; transition: all 0.2s; }
+.role-btn.selected { border-color: #2E6DB4; color: #1A3C6B; background: #EBF3FB; font-weight: 600; }
+.role-btn .icon { font-size: 20px; display: block; margin-bottom: 4px; }
+.form-row-half { display: flex; gap: 10px; }
+.form-row-half .form-row { flex: 1; }
+.msg { margin-top: 12px; font-size: 12px; text-align: center; padding: 8px 12px; border-radius: 7px; display: none; }
+.msg.error { background: #FEE2E2; color: #991B1B; display: block; }
+.msg.success { background: #D1FAE5; color: #065F46; display: block; }
 </style>
 </head>
 <body>
-
 <div class="main">
   <div class="left-panel"></div>
   <div class="right-panel">
@@ -201,12 +64,19 @@ input:focus, select:focus {
         <div class="tab" onclick="switchTab('register')">Register</div>
       </div>
 
-      <!-- SIGN IN FORM -->
+      <!-- SIGN IN -->
       <div class="form-panel active" id="signin">
-        <div class="form-row"><label>Email Address</label><input type="email" placeholder="you@strathmore.edu" /></div>
-        <div class="form-row"><label>Password</label><input type="password" placeholder="••••••••" /></div>
+        <div class="form-row">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" placeholder="you@strathmore.edu" />
+        </div>
+        <div class="form-row">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" />
+        </div>
         <div class="forgot">Forgot password?</div>
-        <button class="submit-btn" onclick="handleSignIn()">Sign In</button>
+        <button class="submit-btn" id="loginBtn" onclick="handleSignIn()">Sign In</button>
+        <div class="msg" id="loginMsg"></div>
         <div class="divider">or sign in as</div>
         <div class="role-btns">
           <div class="role-btn selected" data-role="student" onclick="selectRole(this)"><span class="icon">🎓</span>Student</div>
@@ -215,34 +85,33 @@ input:focus, select:focus {
         </div>
       </div>
 
-      <!-- REGISTER FORM -->
+      <!-- REGISTER -->
       <div class="form-panel" id="register">
         <div class="form-row-half">
-          <div class="form-row"><label>First Name</label><input type="text" placeholder="Alice" /></div>
-          <div class="form-row"><label>Last Name</label><input type="text" placeholder="Wanjiku" /></div>
+          <div class="form-row"><label>First Name</label><input type="text" id="regFirstName" placeholder="Alice" /></div>
+          <div class="form-row"><label>Last Name</label><input type="text" id="regLastName" placeholder="Wanjiku" /></div>
         </div>
-        <div class="form-row"><label>Email Address</label><input type="email" placeholder="you@strathmore.edu" /></div>
-        <div class="form-row"><label>Phone Number</label><input type="tel" placeholder="+254 7XX XXX XXX" /></div>
-        <div class="form-row"><label>Password</label><input type="password" placeholder="••••••••" /></div>
-        <div class="form-row"><label>Confirm Password</label><input type="password" placeholder="••••••••" /></div>
+        <div class="form-row"><label>Email Address</label><input type="email" id="regEmail" placeholder="you@strathmore.edu" /></div>
+        <div class="form-row"><label>Phone Number</label><input type="tel" id="regPhone" placeholder="+254 7XX XXX XXX" /></div>
+        <div class="form-row"><label>Password</label><input type="password" id="regPassword" placeholder="••••••••" /></div>
+        <div class="form-row"><label>Confirm Password</label><input type="password" id="regConfirm" placeholder="••••••••" /></div>
         <div class="form-row">
           <label>Register As</label>
-          <select>
+          <select id="regRole">
             <option value="student">Student</option>
             <option value="landlord">Landlord</option>
           </select>
         </div>
-        <button class="submit-btn" onclick="handleRegister()">Create Account</button>
+        <button class="submit-btn" id="registerBtn" onclick="handleRegister()">Create Account</button>
+        <div class="msg" id="registerMsg"></div>
       </div>
 
     </div>
   </div>
 </div>
 
-//JavaScript!
-
 <script>
-    let selectedRole = 'student';
+  let selectedRole = 'student';
 
   function switchTab(tab) {
     document.querySelectorAll('.tab').forEach((t, i) => {
@@ -250,6 +119,8 @@ input:focus, select:focus {
     });
     document.getElementById('signin').classList.toggle('active', tab === 'signin');
     document.getElementById('register').classList.toggle('active', tab === 'register');
+    document.getElementById('loginMsg').className = 'msg';
+    document.getElementById('registerMsg').className = 'msg';
   }
 
   function selectRole(el) {
@@ -257,52 +128,132 @@ input:focus, select:focus {
     el.classList.add('selected');
     selectedRole = el.getAttribute('data-role');
   }
+
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = `msg ${type}`;
+  }
+
+  function navigateTo(url) {
+    document.body.style.transition = 'opacity 0.3s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = url; }, 300);
+  }
+
   async function handleSignIn() {
-    const email = document.querySelector('#signin input[type="email"]').value;
-    const password = document.querySelector('#signin input[type="password"]').value;
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
 
     if (!email || !password) {
-        alert('Please fill in all fields');
-        return;
+      showMsg('loginMsg', 'Please fill in both fields.', 'error');
+      return;
     }
+
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
 
     try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
 
-            if (data.user.role === 'student') {
-                navigateTo('../student/dashboard.html');
-            } else if (data.user.role === 'landlord') {
-                navigateTo('../landlord/dashboard.html');
-            } else if (data.user.role === 'admin') {
-                navigateTo('../admin/dashboard.html');
-            }
-        } else {
-            alert(data.message);
+        // Role comes from the database, not the buttons
+        if (data.user.role === 'student') {
+          navigateTo('../student/student_dashboard.html');
+        } else if (data.user.role === 'landlord') {
+          navigateTo('../landlord/landlord_dashboard.html');
+        } else if (data.user.role === 'admin') {
+          navigateTo('../admin/admin_dashboard.html');
         }
+      } else {
+        showMsg('loginMsg', data.message || 'Invalid email or password.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      }
 
     } catch (error) {
-        alert('Could not connect to server. Make sure the backend is running.');
+      showMsg('loginMsg', 'Cannot reach server. Is the backend running?', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
     }
-}
-  function handleRegister() {
-  const role = document.querySelector('#register select').value;
-  if (role === 'student') {
-    window.location.href = '../student/dashboard.html';
-  } else if (role === 'landlord') {
-    window.location.href = '../landlord/dashboard.html';
   }
-}
-</script>
 
+  async function handleRegister() {
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName  = document.getElementById('regLastName').value.trim();
+    const email     = document.getElementById('regEmail').value.trim();
+    const phone     = document.getElementById('regPhone').value.trim();
+    const password  = document.getElementById('regPassword').value;
+    const confirm   = document.getElementById('regConfirm').value;
+    const role      = document.getElementById('regRole').value;
+
+    if (!firstName || !lastName || !email || !phone || !password || !confirm) {
+      showMsg('registerMsg', 'Please fill in all fields.', 'error');
+      return;
+    }
+    if (password !== confirm) {
+      showMsg('registerMsg', 'Passwords do not match.', 'error');
+      return;
+    }
+    if (password.length < 6) {
+      showMsg('registerMsg', 'Password must be at least 6 characters.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true;
+    btn.textContent = 'Creating account...';
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`,
+          email,
+          phone_number: phone,
+          password,
+          role
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        showMsg('registerMsg', 'Account created! Redirecting...', 'success');
+
+        setTimeout(() => {
+          if (role === 'student') {
+            navigateTo('../student/student_dashboard.html');
+          } else {
+            navigateTo('../landlord/landlord_dashboard.html');
+          }
+        }, 1000);
+
+      } else {
+        showMsg('registerMsg', data.message || 'Registration failed.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Create Account';
+      }
+
+    } catch (error) {
+      showMsg('registerMsg', 'Cannot reach server. Is the backend running?', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Create Account';
+    }
+  }
+</script>
 </body>
 </html>
