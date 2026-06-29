@@ -232,8 +232,8 @@ textarea {
     Pata Place
   </div>
   <div class="nav-right">
-    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
-    <button class="logout">Log out</button>
+    <a href="landlord_dashboard.html" class="back-btn">← Back to Dashboard</a>
+    <a href="login.html" class="logout">Log out</a>
   </div>
 </nav>
 
@@ -353,7 +353,7 @@ textarea {
 
     <!-- Actions -->
     <div class="form-actions">
-      <button class="btn-cancel" onclick="window.location.href='dashboard.html'">Cancel</button>
+      <button class="btn-cancel" onclick="window.location.href='landlord_dashboard.html'">Cancel</button>
       <button class="btn-save">✓ Save Property Listing</button>
     </div>
 
@@ -433,7 +433,7 @@ textarea {
  
       if (response.ok) {
         showToast('✓ Property submitted! Awaiting admin approval.');
-        setTimeout(() => navigateTo('dashboard.html'), 2000);
+        setTimeout(() => navigateTo('landlord_dashboard.html'), 2000);
       } else {
         showToast(data.message || 'Something went wrong.', true);
         btn.disabled = false;

@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 app.use(cors({
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
@@ -16,6 +16,8 @@ app.use(express.json());
 // Routes
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+const propertyRoutes = require('./routes/properties');
+app.use('/api/properties', propertyRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
