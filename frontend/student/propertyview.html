@@ -5,25 +5,29 @@
 <title>Pata Place – Property View</title>
 <link rel="icon" type="image/png" href="../assets/headicon.png">
 <style>
-* { box-sizing: border-box; 
+* { 
+    box-sizing: border-box; 
     margin: 0; 
     padding: 0; 
     font-family: 'Segoe UI', Arial, sans-serif; 
 }
 body { 
     background: #F4F7FB; 
+    animation: fadeIn 0.4s ease; 
 }
-.nav { 
-    background: #1A3C6B; 
-    padding: 0 28px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    height: 52px; 
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.nav {
+     background: #1A3C6B; 
+     padding: 0 28px; 
+     display: flex; 
+     align-items: center; 
+     justify-content: space-between; 
+     height: 52px; 
+    }
 .nav-brand { 
     color: #fff; 
-    font-weight: 600;   
+    font-weight: 600; 
     font-size: 15px; 
 }
 .nav-links { 
@@ -35,265 +39,337 @@ body {
     color: rgba(255,255,255,0.8); 
     font-size: 13px; 
     text-decoration: none; 
-}
-.nav-btn { 
-    background: #fff; 
-    color: #1A3C6B; 
-    border: none; 
-    border-radius: 20px; 
-    padding: 5px 16px; 
-    font-size: 12px; 
-    font-weight: 600; 
-}
-.content { 
-    max-width: 860px; 
-    margin: 28px auto; 
-    padding: 0 28px; 
-    display: grid; 
-    grid-template-columns: 1fr 340px; 
-    gap: 24px; 
-}
-.main-panel { 
-    background: #fff; 
-    border-radius: 14px; 
-    border: 1px solid #E0E7EF; 
-    overflow: hidden; 
-}
-.prop-hero { 
-    height: 220px; 
-    background: linear-gradient(135deg, #C8D8E8, #A5BACE); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-}
-.prop-hero svg { 
-    width: 64px; 
-    height: 64px; 
-    fill: #7A9AB8; 
-}
-.prop-body { 
-    padding: 24px; 
-}
-.prop-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: flex-start; 
-    margin-bottom: 12px; 
-}
-h2 { 
-    font-size: 22px; 
-    font-weight: 700; 
-    color: #1A1A2E; 
-}
-.meta { 
-    font-size: 13px; 
-    color: #6B7A8D; 
-    margin-top: 4px; 
-}
-.avail-badge { 
-    background: #EAF3DE; 
-    color: #3B6D11; 
-    border-radius: 20px; 
-    padding: 5px 14px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    white-space: nowrap; 
-}
-.amenities { 
-    display: flex; 
-    gap: 8px; 
-    flex-wrap: wrap; 
-    margin: 16px 0; 
-}
-.tag { 
-    background: #F4F7FB; 
-    border: 1px solid #D0DAE8; 
-    border-radius: 20px; 
-    padding: 5px 12px; 
-    font-size: 12px; 
-    color: #1A1A2E; 
-}
-.desc { 
-    font-size: 13px; 
-    color: #4A5568; 
-    line-height: 1.7; 
-    margin: 16px 0; 
-}
-.landlord-box { 
-    background: #F4F7FB; 
-    border-radius: 10px; 
-    padding: 14px; 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
-}
-.avatar { 
-    width: 44px; 
-    height: 44px; 
-    border-radius: 50%; 
-    background: #1A3C6B; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: #fff; 
-    font-weight: 700; 
-    font-size: 15px; 
-}
-.landlord-name { 
-    font-size: 14px; 
-    font-weight: 600; 
-    color: #1A1A2E; 
-}
-.landlord-phone { 
-    font-size: 12px; 
-    color: #6B7A8D; 
-    margin-top: 2px; 
-}
-.side-panel { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 16px; 
-}
-.price-card { 
-    background: #fff; 
-    border-radius: 14px; 
-    border: 1px solid #E0E7EF; 
-    padding: 20px; 
-}
-.price-label { 
-    font-size: 11px; 
-    font-weight: 600; 
-    color: #6B7A8D; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em; 
-    margin-bottom: 6px; 
-}
-.price-amount { 
-    font-size: 28px; 
-    font-weight: 700; 
-    color: #1A3C6B; 
-    margin-bottom: 4px; 
-}
-.price-sub { 
-    font-size: 12px; 
-    color: #6B7A8D; 
-}
-.divider { 
-    border: none; 
-    border-top: 1px solid #E0E7EF; 
-    margin: 14px 0; 
-}
-.detail-row { 
-    display: flex; 
-    justify-content: space-between; 
-    font-size: 13px; 
-    margin-bottom: 8px; 
-}
-.detail-row span:first-child { 
-    color: #6B7A8D; 
-}
-.detail-row span:last-child { 
-    font-weight: 600; 
-    color: #1A1A2E; 
-}
-.btn-primary { 
-    width: 100%; 
-    background: #1A3C6B; 
-    color: #fff; 
-    border: none; 
-    border-radius: 8px; 
-    padding: 13px; 
-    font-size: 14px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    margin-bottom: 10px; 
-}
-.btn-secondary { 
-    width: 100%; 
-    background: transparent; 
-    color: #1A3C6B; 
-    border: 2px solid #1A3C6B; 
-    border-radius: 8px; 
-    padding: 11px; 
-    font-size: 14px; 
-    font-weight: 600; 
     cursor: pointer; 
 }
-.map-card { 
-    background: #fff; 
-    border-radius: 14px; 
-    border: 1px solid #E0E7EF; 
-    padding: 16px; 
-}
-.map-placeholder { 
-    background: linear-gradient(135deg, #D0DAE8, #B8C9DC); 
-    height: 120px; 
-    border-radius: 8px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: #6B7A8D; 
-    font-size: 13px; 
-}
+.nav-btn { background: #fff; color: #1A3C6B; border: none; border-radius: 20px; padding: 5px 16px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+.content { max-width: 860px; margin: 28px auto; padding: 0 28px; display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+
+.main-panel { background: #fff; border-radius: 14px; border: 1px solid #E0E7EF; overflow: hidden; }
+.prop-hero { height: 220px; background: linear-gradient(135deg, #C8D8E8, #A5BACE); display: flex; align-items: center; justify-content: center; }
+.prop-hero svg { width: 64px; height: 64px; fill: #7A9AB8; }
+
+.prop-body { padding: 24px; }
+.prop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+h2 { font-size: 22px; font-weight: 700; color: #1A1A2E; }
+.meta { font-size: 13px; color: #6B7A8D; margin-top: 4px; }
+.avail-badge { border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.avail-badge.available { background: #EAF3DE; color: #3B6D11; }
+.avail-badge.pending { background: #FAEEDA; color: #854F0B; }
+
+.amenities { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+.tag { background: #F4F7FB; border: 1px solid #D0DAE8; border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #1A1A2E; }
+
+.desc { font-size: 13px; color: #4A5568; line-height: 1.7; margin: 16px 0; }
+.section-label { font-size: 12px; font-weight: 700; color: #6B7A8D; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+
+.landlord-box { background: #F4F7FB; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: #1A3C6B; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 15px; }
+.landlord-name { font-size: 14px; font-weight: 600; color: #1A1A2E; }
+.landlord-phone { font-size: 12px; color: #6B7A8D; margin-top: 2px; }
+
+.side-panel { display: flex; flex-direction: column; gap: 16px; }
+.price-card { background: #fff; border-radius: 14px; border: 1px solid #E0E7EF; padding: 20px; }
+.price-label { font-size: 11px; font-weight: 600; color: #6B7A8D; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.price-amount { font-size: 28px; font-weight: 700; color: #1A3C6B; margin-bottom: 4px; }
+.price-sub { font-size: 12px; color: #6B7A8D; }
+.divider { border: none; border-top: 1px solid #E0E7EF; margin: 14px 0; }
+.detail-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.detail-row span:first-child { color: #6B7A8D; }
+.detail-row span:last-child { font-weight: 600; color: #1A1A2E; }
+
+.btn-primary { width: 100%; background: #1A3C6B; color: #fff; border: none; border-radius: 8px; padding: 13px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: background 0.2s; }
+.btn-primary:hover { background: #2E6DB4; }
+.btn-primary:disabled { background: #9AAAB8; cursor: not-allowed; }
+.btn-secondary { width: 100%; background: transparent; color: #1A3C6B; border: 2px solid #1A3C6B; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { background: #F4F7FB; }
+.btn-secondary.saved { background: #1A3C6B; color: #fff; border-color: #1A3C6B; }
+
+/* Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: #fff; border-radius: 14px; padding: 28px; max-width: 380px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+.modal h3 { font-size: 17px; font-weight: 700; color: #1A1A2E; margin-bottom: 6px; }
+.modal p.sub { font-size: 13px; color: #6B7A8D; margin-bottom: 20px; }
+.modal label { font-size: 11px; font-weight: 700; color: #6B7A8D; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
+.modal input, .modal textarea { width: 100%; border: 1px solid #D0DAE8; border-radius: 8px; padding: 10px 12px; font-size: 13px; font-family: inherit; outline: none; margin-bottom: 16px; }
+.modal input:focus, .modal textarea:focus { border-color: #2E6DB4; }
+.modal textarea { resize: vertical; min-height: 70px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-cancel { background: #F4F7FB; border: 1px solid #D0DAE8; border-radius: 7px; padding: 9px 18px; font-size: 13px; font-weight: 600; color: #6B7A8D; cursor: pointer; }
+.modal-confirm { background: #1A3C6B; border: none; border-radius: 7px; padding: 9px 18px; font-size: 13px; font-weight: 600; color: #fff; cursor: pointer; }
+.modal-confirm:disabled { background: #9AAAB8; cursor: not-allowed; }
+.modal-error { font-size: 12px; color: #A32D2D; margin: -10px 0 14px; display: none; }
+.modal-error.show { display: block; }
+
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #1A3C6B; color: #fff; padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200; }
+.toast.show { opacity: 1; }
+.toast.error { background: #B91C1C; }
+.toast.success { background: #065F46; }
 </style>
 </head>
 <body>
 <div class="nav">
   <div class="nav-brand">🏠 Pata Place</div>
   <div class="nav-links">
-    <a href="#">← Back to Listings</a>
-    <button class="nav-btn">Logout</button>
+    <a onclick="goBack()">← Back to Listings</a>
+    <button class="nav-btn" onclick="logout()">Logout</button>
   </div>
 </div>
+
 <div class="content">
   <div class="main-panel">
-    <div class="prop-hero"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <div class="prop-hero">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
     <div class="prop-body">
       <div class="prop-header">
-        <div><h2>Kilimani Studio Apartment</h2><div class="meta">📍 Kilimani, Nairobi &nbsp;·&nbsp; 📅 Posted Jun 1, 2026 &nbsp;·&nbsp; 1.2 km from campus</div></div>
-        <span class="avail-badge">✓ Available</span>
+        <div>
+          <h2 id="propName">–</h2>
+          <div class="meta" id="propMeta">–</div>
+        </div>
+        <span class="avail-badge" id="propBadge">–</span>
       </div>
-
-      <div class="desc">Fully furnished self-contained studio, just 5 minutes walk from Strathmore University main gate. Features high-speed WiFi, 24-hour security, reliable backup water supply, and a fitted kitchenette. The quiet, study-friendly environment is ideal for undergraduate and postgraduate students. Monthly rent is inclusive of water and service charge.</div>
-      
-      <div style="font-size:12px;font-weight:700;color:#6B7A8D;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Amenities</div>
-      
-      <div class="amenities">
-        <span class="tag">📶 WiFi Included</span>
-        <span class="tag">🔒 24hr Security</span>
-        <span class="tag">💧 Water Included</span>
-        <span class="tag">⚡ Power Backup</span>
-        <span class="tag">🛋️ Fully Furnished</span>
-        <span class="tag">🅿️ Parking Available</span>
-      </div>
-      
+      <div class="desc" id="propDesc">–</div>
+      <div class="section-label">Amenities</div>
+      <div class="amenities" id="propAmenities"></div>
       <hr style="border:none;border-top:1px solid #E0E7EF;margin:16px 0;">
-      <div style="font-size:12px;font-weight:700;color:#6B7A8D;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;">Landlord</div>
+      <div class="section-label">Landlord</div>
       <div class="landlord-box">
-        <div class="avatar">JM</div>
-        <div><div class="landlord-name">John Mwangi</div><div class="landlord-phone">📞 +254 712 345 678 &nbsp;·&nbsp; ✉️ john.m@gmail.com</div></div>
+        <div class="avatar" id="landlordInitials">–</div>
+        <div>
+          <div class="landlord-name" id="landlordName">–</div>
+          <div class="landlord-phone" id="landlordContact">–</div>
+        </div>
       </div>
     </div>
   </div>
+
   <div class="side-panel">
     <div class="price-card">
       <div class="price-label">Monthly Rent</div>
-      <div class="price-amount">KES 12,000</div>
-      <div class="price-sub">Deposit: KES 24,000 &nbsp;·&nbsp; Bills: Included</div>
+      <div class="price-amount" id="propPrice">–</div>
+      <div class="price-sub" id="propSub">–</div>
       <hr class="divider">
-      <div class="detail-row"><span>Property Type</span><span>Studio</span></div>
-      <div class="detail-row"><span>Distance</span><span>1.2 km</span></div>
-      <div class="detail-row"><span>Date Posted</span><span>Jun 1, 2026</span></div>
-      <div class="detail-row"><span>Status</span><span style="color:#3B6D11;">Available</span></div>
+      <div class="detail-row"><span>Property Type</span><span id="detailType">–</span></div>
+      <div class="detail-row"><span>Distance</span><span id="detailDistance">–</span></div>
+      <div class="detail-row"><span>Date Posted</span><span id="detailPosted">–</span></div>
+      <div class="detail-row"><span>Status</span><span id="detailStatus">–</span></div>
       <hr class="divider">
-      <button class="btn-primary">📅 Request Viewing</button>
-      <button class="btn-secondary">🤍 Save Property</button>
-    </div>
-    <div class="map-card">
-      <div style="font-size:13px;font-weight:600;color:#1A1A2E;margin-bottom:10px;">📍 Location</div>
-      <div class="map-placeholder">🗺️ Kilimani, Nairobi<br><small>1.2 km from Strathmore</small></div>
+      <button class="btn-primary" id="requestBtn" onclick="openRequestModal()">📅 Request Viewing</button>
+      <button class="btn-secondary" id="saveBtn" onclick="toggleSave()">🤍 Save Property</button>
     </div>
   </div>
 </div>
+
+<!-- Request Viewing Modal -->
+<div class="modal-overlay" id="requestModal">
+  <div class="modal">
+    <h3>Request a Viewing</h3>
+    <p class="sub" id="modalPropName">For this property</p>
+    <label>Preferred Viewing Date</label>
+    <input type="date" id="viewingDate" />
+    <label>Message to Landlord (optional)</label>
+    <textarea id="viewingMessage" placeholder="e.g. I'm available any time after 2pm"></textarea>
+    <div class="modal-error" id="modalError"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeRequestModal()">Cancel</button>
+      <button class="modal-confirm" id="confirmRequestBtn" onclick="submitRequest()">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let currentProperty = null;
+
+  const amenityIcons = {
+    "WiFi Included": "📶", "24hr Security": "🔒", "Water Included": "💧",
+    "Power Backup": "⚡", "Fully Furnished": "🛋️", "Parking Available": "🅿️", "Kitchen": "🍳"
+  };
+
+  function capitalise(str) { return str ? str.charAt(0).toUpperCase() + str.slice(1) : '–'; }
+  function getInitials(name) { return name ? name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() : '–'; }
+
+  function showToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast show ${type}`;
+    setTimeout(() => { t.className = 'toast'; }, 3000);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const raw = sessionStorage.getItem('selectedProperty');
+    if (!raw) { window.location.href = 'student_dashboard.html'; return; }
+
+    const p = JSON.parse(raw);
+    currentProperty = p;
+
+    // Handle both hardcoded-shape and live-DB-shape objects
+    const name      = p.name || p.property_name;
+    const type      = p.type || p.property_type;
+    const distance  = p.distance || p.distance_from_campus;
+    const desc      = p.description;
+    const price     = p.price;
+    const deposit   = p.deposit;
+    const bills     = typeof p.bills === 'string' ? p.bills : (p.bills_included ? 'Included' : 'Not included');
+    const status    = p.status || p.availability_status;
+    const posted    = p.posted || (p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '–');
+    const landlord  = p.landlord || (p.landlord_id && p.landlord_id.name) || 'Landlord';
+    const lPhone    = p.landlordPhone || (p.landlord_id && p.landlord_id.phone_number) || '–';
+    const lEmail    = p.landlordEmail || (p.landlord_id && p.landlord_id.email) || '–';
+
+    document.title = `Pata Place – ${name}`;
+    document.getElementById('propName').textContent = name;
+    document.getElementById('propMeta').textContent  = `📍 ${p.location}, Nairobi  ·  📅 Posted ${posted}  ·  ${distance}`;
+    document.getElementById('propDesc').textContent  = desc;
+    document.getElementById('propPrice').textContent = `KES ${Number(price).toLocaleString()}`;
+    document.getElementById('propSub').textContent   = `Deposit: KES ${Number(deposit).toLocaleString()}  ·  Bills: ${bills}`;
+    document.getElementById('detailType').textContent = capitalise(type);
+    document.getElementById('detailDistance').textContent = distance;
+    document.getElementById('detailPosted').textContent = posted;
+    document.getElementById('landlordName').textContent = landlord;
+    document.getElementById('landlordContact').textContent = `📞 ${lPhone}  ·  ✉️ ${lEmail}`;
+    document.getElementById('landlordInitials').textContent = getInitials(landlord);
+    document.getElementById('modalPropName').textContent = `For ${name}`;
+
+    const badge = document.getElementById('propBadge');
+    const isAvail = status === 'available';
+    badge.textContent = isAvail ? '✓ Available' : '⏳ Pending';
+    badge.classList.add(isAvail ? 'available' : 'pending');
+
+    const statusEl = document.getElementById('detailStatus');
+    statusEl.textContent = capitalise(status);
+    statusEl.style.color = isAvail ? '#3B6D11' : '#854F0B';
+
+    if (!isAvail) {
+      document.getElementById('requestBtn').disabled = true;
+      document.getElementById('requestBtn').textContent = 'Currently Unavailable';
+    }
+
+    const amenitiesObj = p.amenities;
+    const amenitiesEl = document.getElementById('propAmenities');
+    if (Array.isArray(amenitiesObj)) {
+      amenitiesEl.innerHTML = amenitiesObj.map(a => `<span class="tag">${amenityIcons[a] || '✔️'} ${a}</span>`).join('');
+    } else if (amenitiesObj && typeof amenitiesObj === 'object') {
+      const labels = { wifi: 'WiFi Included', water: 'Water Included', security: '24hr Security', power_backup: 'Power Backup', furnished: 'Fully Furnished', parking: 'Parking Available', gym: 'Gym', kitchen: 'Kitchen' };
+      const active = Object.keys(amenitiesObj).filter(k => amenitiesObj[k]);
+      amenitiesEl.innerHTML = active.length
+        ? active.map(k => `<span class="tag">${amenityIcons[labels[k]] || '✔️'} ${labels[k] || k}</span>`).join('')
+        : '<span class="tag">No amenities listed</span>';
+    }
+
+    // Check saved state
+    const saved = JSON.parse(localStorage.getItem('savedProperties') || '[]');
+    if (saved.includes(p._id)) {
+      const btn = document.getElementById('saveBtn');
+      btn.textContent = '💙 Saved';
+      btn.classList.add('saved');
+    }
+  });
+
+  // ── Request Viewing modal ───────────────────────────────────────
+  function openRequestModal() {
+    document.getElementById('requestModal').classList.add('show');
+    document.getElementById('modalError').className = 'modal-error';
+    const dateInput = document.getElementById('viewingDate');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.min = tomorrow.toISOString().split('T')[0];
+  }
+
+  function closeRequestModal() {
+    document.getElementById('requestModal').classList.remove('show');
+    document.getElementById('viewingDate').value = '';
+    document.getElementById('viewingMessage').value = '';
+  }
+
+  async function submitRequest() {
+    const viewingDate = document.getElementById('viewingDate').value;
+    const message = document.getElementById('viewingMessage').value.trim();
+    const errorEl = document.getElementById('modalError');
+
+    if (!viewingDate) {
+      errorEl.textContent = 'Please select a viewing date.';
+      errorEl.className = 'modal-error show';
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      errorEl.textContent = 'You must be logged in to request a viewing.';
+      errorEl.className = 'modal-error show';
+      return;
+    }
+
+    const btn = document.getElementById('confirmRequestBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    try {
+      const propertyId = currentProperty._id || currentProperty.id;
+      const response = await fetch('http://localhost:5000/api/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ property_id: propertyId, viewing_date: viewingDate, message })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        closeRequestModal();
+        showToast('✓ Viewing request submitted!', 'success');
+        setTimeout(() => navigateTo('requests.html'), 1200);
+      } else {
+        errorEl.textContent = data.message || 'Something went wrong.';
+        errorEl.className = 'modal-error show';
+        btn.disabled = false;
+        btn.textContent = 'Submit Request';
+      }
+    } catch (err) {
+      errorEl.textContent = 'Could not reach server. Is the backend running?';
+      errorEl.className = 'modal-error show';
+      btn.disabled = false;
+      btn.textContent = 'Submit Request';
+    }
+  }
+
+  // ── Save property (local, lightweight) ──────────────────────────
+  function toggleSave() {
+    const id = currentProperty._id || currentProperty.id;
+    let saved = JSON.parse(localStorage.getItem('savedProperties') || '[]');
+    const btn = document.getElementById('saveBtn');
+
+    if (saved.includes(id)) {
+      saved = saved.filter(s => s !== id);
+      btn.textContent = '🤍 Save Property';
+      btn.classList.remove('saved');
+      showToast('Removed from saved properties.');
+    } else {
+      saved.push(id);
+      btn.textContent = '💙 Saved';
+      btn.classList.add('saved');
+      showToast('✓ Saved to your favourites.', 'success');
+    }
+    localStorage.setItem('savedProperties', JSON.stringify(saved));
+  }
+
+  // ── Navigation ─────────────────────────────────────────────────
+  function navigateTo(url) {
+    document.body.style.transition = 'opacity 0.3s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = url; }, 300);
+  }
+  function goBack() { navigateTo('student_dashboard.html'); }
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigateTo('../authentication/login.html');
+  }
+</script>
 </body>
 </html>
