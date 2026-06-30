@@ -91,4 +91,39 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
+// GET all pending properties (admin only)
+router.get('/pending', auth, async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied' });
+        }
+        const properties = await Property.find({ approval_status: 'pending' })
+            .populate('landlord_id', 'name email');
+        res.status(200).json(properties);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// PUT approve or reject a property (admin only)
+router.put('/:id/approval', auth, async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied' });
+        }
+        const { approval_status } = req.body; // 'approved' or 'rejected'
+        const property = await Property.findByIdAndUpdate(
+            req.params.id,
+            { approval_status },
+            { new: true }
+        );
+        if (!property) {
+            return res.status(404).json({ message: 'Property not found' });
+        }
+        res.status(200).json({ message: `Property ${approval_status}`, property });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 module.exports = router;

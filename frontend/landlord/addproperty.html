@@ -221,9 +221,38 @@ textarea {
     transition: background 0.2s; }
 .btn-save:hover { 
     background: #2E6DB4; }
+.btn-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed; }
+
+/* ── Toast ── */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #1A3C6B;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 999; }
+.toast.show {
+    opacity: 1;
+    transform: translateY(0); }
+.toast.error {
+    background: #991B1B; }
 </style>
 </head>
 <body>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <!-- Navbar -->
 <nav class="nav">
@@ -233,7 +262,7 @@ textarea {
   </div>
   <div class="nav-right">
     <a href="landlord_dashboard.html" class="back-btn">← Back to Dashboard</a>
-    <a href="login.html" class="logout">Log out</a>
+    <button class="logout" onclick="logout()">Log out</button>
   </div>
 </nav>
 
@@ -253,11 +282,11 @@ textarea {
       <div class="grid-2" style="margin-bottom: 16px;">
         <div class="form-row">
           <label>Property Name</label>
-          <input type="text" placeholder="e.g. Kilimani Studio Apartment" />
+          <input type="text" id="propertyName" placeholder="e.g. Kilimani Studio Apartment" />
         </div>
         <div class="form-row">
           <label>Property Type</label>
-          <select>
+          <select id="propertyType">
             <option value="">Select type...</option>
             <option>Bedsitter</option>
             <option>Single Room</option>
@@ -270,7 +299,7 @@ textarea {
       </div>
       <div class="form-row">
         <label>Description</label>
-        <textarea placeholder="Describe the property, nearby amenities, distance from Strathmore..."></textarea>
+        <textarea id="description" placeholder="Describe the property, nearby amenities, distance from Strathmore..."></textarea>
       </div>
     </div>
 
@@ -280,28 +309,28 @@ textarea {
       <div class="grid-3" style="margin-bottom: 16px;">
         <div class="form-row">
           <label>Location / Estate</label>
-          <input type="text" placeholder="e.g. Kilimani, Nairobi" />
+          <input type="text" id="location" placeholder="e.g. Kilimani, Nairobi" />
         </div>
         <div class="form-row">
           <label>Distance from Campus</label>
-          <input type="text" placeholder="e.g. 1.2 km" />
+          <input type="text" id="distance" placeholder="e.g. 1.2 km" />
         </div>
         <div class="form-row">
           <label>Price per Month (KES)</label>
-          <input type="number" placeholder="e.g. 12000" />
+          <input type="number" id="price" placeholder="e.g. 12000" />
         </div>
       </div>
       <div class="grid-2">
         <div class="form-row">
           <label>Deposit (KES)</label>
-          <input type="number" placeholder="e.g. 24000" />
+          <input type="number" id="deposit" placeholder="e.g. 24000" />
         </div>
         <div class="form-row">
           <label>Bills</label>
-          <select>
+          <select id="bills">
             <option value="">Select...</option>
-            <option>Included in rent</option>
-            <option>Excluded from rent</option>
+            <option value="true">Included in rent</option>
+            <option value="false">Excluded from rent</option>
           </select>
         </div>
       </div>
@@ -313,14 +342,14 @@ textarea {
       <div class="grid-2">
         <div class="form-row">
           <label>Availability Status</label>
-          <select>
+          <select id="availStatus">
             <option value="available">Available</option>
             <option value="unavailable">Unavailable</option>
           </select>
         </div>
         <div class="form-row">
           <label>Date Available From</label>
-          <input type="date" />
+          <input type="date" id="dateAvailable" />
         </div>
       </div>
     </div>
@@ -329,14 +358,14 @@ textarea {
     <div class="form-section">
       <div class="form-section-title">Amenities</div>
       <div class="amenities-grid">
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-wifi"></i> Wi-Fi</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-tint"></i> Water</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-lock"></i> Security</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-battery-full"></i> Power Backup</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-couch"></i> Furnished</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-parking"></i> Parking</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-dumbbell"></i> Gym</span></label>
-        <label class="amenity-item"><input type="checkbox" /><span><i class="fas fa-utensils"></i> Kitchen</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_wifi" /><span><i class="fas fa-wifi"></i> Wi-Fi</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_water" /><span><i class="fas fa-tint"></i> Water</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_security" /><span><i class="fas fa-lock"></i> Security</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_power" /><span><i class="fas fa-battery-full"></i> Power Backup</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_furnished" /><span><i class="fas fa-couch"></i> Furnished</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_parking" /><span><i class="fas fa-parking"></i> Parking</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_gym" /><span><i class="fas fa-dumbbell"></i> Gym</span></label>
+        <label class="amenity-item"><input type="checkbox" id="am_kitchen" /><span><i class="fas fa-utensils"></i> Kitchen</span></label>
       </div>
     </div>
 
@@ -353,8 +382,8 @@ textarea {
 
     <!-- Actions -->
     <div class="form-actions">
-      <button class="btn-cancel" onclick="window.location.href='landlord_dashboard.html'">Cancel</button>
-      <button class="btn-save">✓ Save Property Listing</button>
+      <button class="btn-cancel" onclick="navigateTo('landlord_dashboard.html')">Cancel</button>
+      <button class="btn-save" id="saveBtn" onclick="submitProperty()">✓ Save Property Listing</button>
     </div>
 
   </div>
@@ -367,25 +396,37 @@ textarea {
     t.className = 'toast show' + (isError ? ' error' : '');
     setTimeout(() => { t.className = 'toast'; }, 3500);
   }
- 
+
+  function navigateTo(url) {
+    document.body.style.transition = 'opacity 0.3s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = url; }, 300);
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigateTo('../authentication/login.html');
+  }
+
   async function submitProperty() {
     // Basic validation
-    const name     = document.getElementById('propertyName').value.trim();
-    const type     = document.getElementById('propertyType').value;
-    const desc     = document.getElementById('description').value.trim();
-    const location = document.getElementById('location').value.trim();
-    const distance = document.getElementById('distance').value.trim();
-    const price    = document.getElementById('price').value;
-    const deposit  = document.getElementById('deposit').value;
-    const bills    = document.getElementById('bills').value;
-    const status   = document.getElementById('availStatus').value;
-    const dateAvail= document.getElementById('dateAvailable').value;
- 
+    const name      = document.getElementById('propertyName').value.trim();
+    const type      = document.getElementById('propertyType').value;
+    const desc      = document.getElementById('description').value.trim();
+    const location  = document.getElementById('location').value.trim();
+    const distance  = document.getElementById('distance').value.trim();
+    const price     = document.getElementById('price').value;
+    const deposit   = document.getElementById('deposit').value;
+    const bills     = document.getElementById('bills').value;
+    const status    = document.getElementById('availStatus').value;
+    const dateAvail = document.getElementById('dateAvailable').value;
+
     if (!name || !type || !desc || !location || !distance || !price || !deposit || !bills) {
       showToast('Please fill in all required fields.', true);
       return;
     }
- 
+
     const amenities = {
       wifi:         document.getElementById('am_wifi').checked,
       water:        document.getElementById('am_water').checked,
@@ -396,17 +437,17 @@ textarea {
       gym:          document.getElementById('am_gym').checked,
       kitchen:      document.getElementById('am_kitchen').checked
     };
- 
+
     const token = localStorage.getItem('token');
     if (!token) {
       showToast('You are not logged in.', true);
       return;
     }
- 
+
     const btn = document.getElementById('saveBtn');
     btn.disabled = true;
     btn.textContent = 'Saving...';
- 
+
     try {
       const response = await fetch('http://localhost:5000/api/properties', {
         method: 'POST',
@@ -428,9 +469,9 @@ textarea {
           amenities
         })
       });
- 
+
       const data = await response.json();
- 
+
       if (response.ok) {
         showToast('✓ Property submitted! Awaiting admin approval.');
         setTimeout(() => navigateTo('landlord_dashboard.html'), 2000);
@@ -439,24 +480,12 @@ textarea {
         btn.disabled = false;
         btn.textContent = '✓ Save Property Listing';
       }
- 
+
     } catch (err) {
       showToast('Could not reach server. Is the backend running?', true);
       btn.disabled = false;
       btn.textContent = '✓ Save Property Listing';
     }
-  }
- 
-  function navigateTo(url) {
-    document.body.style.transition = 'opacity 0.3s ease';
-    document.body.style.opacity = '0';
-    setTimeout(() => { window.location.href = url; }, 300);
-  }
- 
-  function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigateTo('../authentication/login.html');
   }
 </script>
 </body>

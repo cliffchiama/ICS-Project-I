@@ -162,6 +162,11 @@ tr:hover td {
     font-size: 11px; 
     color: #6B7A8D; 
     margin-top: 2px; }
+.empty-row td { 
+    text-align: center; 
+    color: #9AAAB8; 
+    padding: 28px 16px; 
+    font-size: 13px; }
 
 /* ── Badges ── */
 .badge { 
@@ -187,6 +192,9 @@ tr:hover td {
 .badge.landlord { 
     background: #F3E8FF; 
     color: #6B21A8; }
+.badge.admin {
+    background: #1A3C6B;
+    color: #fff; }
 
 /* ── Action Buttons ── */
 .actions { 
@@ -214,17 +222,6 @@ tr:hover td {
     cursor: pointer; }
 .btn-reject:hover { 
     background: #FECACA; }
-.btn-edit { 
-    background: #EBF3FB; 
-    border: none; 
-    border-radius: 6px; 
-    padding: 6px 12px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    color: #1A3C6B; 
-    cursor: pointer; }
-.btn-edit:hover { 
-    background: #D0E4F5; }
 .btn-suspend { 
     background: #FEF3C7; 
     border: none; 
@@ -236,6 +233,17 @@ tr:hover td {
     cursor: pointer; }
 .btn-suspend:hover { 
     background: #FDE68A; }
+.btn-activate { 
+    background: #D1FAE5; 
+    border: none; 
+    border-radius: 6px; 
+    padding: 6px 12px; 
+    font-size: 12px; 
+    font-weight: 600; 
+    color: #065F46; 
+    cursor: pointer; }
+.btn-activate:hover { 
+    background: #A7F3D0; }
 </style>
 </head>
 <body>
@@ -251,7 +259,7 @@ tr:hover td {
     <a href="#">Users</a>
     <a href="#">Listings</a>
     <a href="#">Reports</a>
-    <button class="logout">Log out</button>
+    <button class="logout" onclick="logout()">Log out</button>
   </div>
 </nav>
 
@@ -264,24 +272,24 @@ tr:hover td {
 <!-- Stats -->
 <div class="stats-row">
   <div class="stat-card">
-    <div class="stat-value">312</div>
+    <div class="stat-value" id="statTotalUsers">–</div>
     <div class="stat-label">Total Users</div>
-    <div class="stat-sub">+18 this week</div>
+    <div class="stat-sub" id="statStudentsLandlords">&nbsp;</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">124</div>
+    <div class="stat-value" id="statTotalListings">–</div>
     <div class="stat-label">Total Listings</div>
-    <div class="stat-sub">14 pending approval</div>
+    <div class="stat-sub" id="statPendingCount">&nbsp;</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">87</div>
-    <div class="stat-label">Viewing Requests</div>
-    <div class="stat-sub">Across all properties</div>
+    <div class="stat-value" id="statApproved">–</div>
+    <div class="stat-label">Approved Listings</div>
+    <div class="stat-sub">Visible to students</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">240</div>
-    <div class="stat-label">Notifications Sent</div>
-    <div class="stat-sub">This month</div>
+    <div class="stat-value" id="statSuspended">–</div>
+    <div class="stat-label">Suspended Users</div>
+    <div class="stat-sub">Accounts disabled</div>
   </div>
 </div>
 
@@ -292,7 +300,6 @@ tr:hover td {
   <div>
     <div class="section-header">
       <h2>Listings Pending Approval</h2>
-      <a href="#" class="view-all">View all listings</a>
     </div>
     <div class="table-wrap">
       <table>
@@ -306,49 +313,8 @@ tr:hover td {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="prop-name">Lavington 1BR</div>
-              <div class="prop-sub">1 Bedroom</div>
-            </td>
-            <td>Jane White</td>
-            <td>Lavington</td>
-            <td>KES 18,500</td>
-            <td>Jun 2, 2026</td>
-            <td class="actions">
-              <button class="btn-approve">Approve</button>
-              <button class="btn-reject">Reject</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="prop-name">Westlands Studio</div>
-              <div class="prop-sub">Bedsitter</div>
-            </td>
-            <td>Ali Hassan</td>
-            <td>Westlands</td>
-            <td>KES 15,000</td>
-            <td>Jun 3, 2026</td>
-            <td class="actions">
-              <button class="btn-approve">Approve</button>
-              <button class="btn-reject">Reject</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="prop-name">South B 2BR</div>
-              <div class="prop-sub">2 Bedroom</div>
-            </td>
-            <td>Mary Njeri</td>
-            <td>South B</td>
-            <td>KES 22,000</td>
-            <td>Jun 5, 2026</td>
-            <td class="actions">
-              <button class="btn-approve">Approve</button>
-              <button class="btn-reject">Reject</button>
-            </td>
-          </tr>
+        <tbody id="pendingTableBody">
+          <tr class="empty-row"><td colspan="6">Loading...</td></tr>
         </tbody>
       </table>
     </div>
@@ -358,7 +324,6 @@ tr:hover td {
   <div>
     <div class="section-header">
       <h2>All Users</h2>
-      <a href="#" class="view-all">Manage users</a>
     </div>
     <div class="table-wrap">
       <table>
@@ -371,53 +336,179 @@ tr:hover td {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><div class="prop-name">Alice Wanjiku</div></td>
-            <td>a.wanjiku@strathmore.edu</td>
-            <td><span class="badge student">Student</span></td>
-            <td><span class="badge active">Active</span></td>
-            <td class="actions">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-suspend">Suspend</button>
-            </td>
-          </tr>
-          <tr>
-            <td><div class="prop-name">John Mwangi</div></td>
-            <td>john.m@gmail.com</td>
-            <td><span class="badge landlord">Landlord</span></td>
-            <td><span class="badge active">Active</span></td>
-            <td class="actions">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-suspend">Suspend</button>
-            </td>
-          </tr>
-          <tr>
-            <td><div class="prop-name">Peter Otieno</div></td>
-            <td>p.otieno@strathmore.edu</td>
-            <td><span class="badge student">Student</span></td>
-            <td><span class="badge suspended">Suspended</span></td>
-            <td class="actions">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-suspend">Suspend</button>
-            </td>
-          </tr>
-          <tr>
-            <td><div class="prop-name">Jane White</div></td>
-            <td>jane.w@gmail.com</td>
-            <td><span class="badge landlord">Landlord</span></td>
-            <td><span class="badge active">Active</span></td>
-            <td class="actions">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-suspend">Suspend</button>
-            </td>
-          </tr>
+        <tbody id="usersTableBody">
+          <tr class="empty-row"><td colspan="5">Loading...</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
 </div>
+
+<script>
+const API_URL = 'http://localhost:5000/api';
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+// Guard: must be logged in as admin
+if (!token || user.role !== 'admin') {
+  window.location.href = '../authentication/login.html';
+}
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '../authentication/login.html';
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+async function loadPendingProperties() {
+  try {
+    const res = await fetch(`${API_URL}/properties/pending`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const properties = await res.json();
+    const tbody = document.getElementById('pendingTableBody');
+
+    if (!res.ok || properties.length === 0) {
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="6">No listings pending approval</td></tr>`;
+      document.getElementById('statPendingCount').textContent = '0 pending approval';
+      return;
+    }
+
+    document.getElementById('statPendingCount').textContent = `${properties.length} pending approval`;
+
+    tbody.innerHTML = properties.map(p => `
+      <tr id="pending-row-${p._id}">
+        <td>
+          <div class="prop-name">${p.property_name}</div>
+          <div class="prop-sub">${p.property_type}</div>
+        </td>
+        <td>${p.landlord_id?.name || 'Unknown'}</td>
+        <td>${p.location}</td>
+        <td>KES ${p.price.toLocaleString()}</td>
+        <td>${formatDate(p.createdAt)}</td>
+        <td class="actions">
+          <button class="btn-approve" onclick="updateApproval('${p._id}', 'approved')">Approve</button>
+          <button class="btn-reject" onclick="updateApproval('${p._id}', 'rejected')">Reject</button>
+        </td>
+      </tr>
+    `).join('');
+
+  } catch (error) {
+    document.getElementById('pendingTableBody').innerHTML =
+      `<tr class="empty-row"><td colspan="6">Could not load listings. Is the backend running?</td></tr>`;
+  }
+}
+
+async function updateApproval(propertyId, status) {
+  try {
+    const res = await fetch(`${API_URL}/properties/${propertyId}/approval`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ approval_status: status })
+    });
+
+    if (res.ok) {
+      const row = document.getElementById(`pending-row-${propertyId}`);
+      if (row) row.remove();
+      loadStats();
+    } else {
+      alert('Could not update listing status');
+    }
+  } catch (error) {
+    alert('Could not reach server');
+  }
+}
+
+async function loadUsers() {
+  try {
+    const res = await fetch(`${API_URL}/users`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const users = await res.json();
+    const tbody = document.getElementById('usersTableBody');
+
+    if (!res.ok || users.length === 0) {
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="5">No users found</td></tr>`;
+      return;
+    }
+
+    const studentCount = users.filter(u => u.role === 'student').length;
+    const landlordCount = users.filter(u => u.role === 'landlord').length;
+    const suspendedCount = users.filter(u => u.status === 'suspended').length;
+
+    document.getElementById('statTotalUsers').textContent = users.length;
+    document.getElementById('statStudentsLandlords').textContent = `${studentCount} students, ${landlordCount} landlords`;
+    document.getElementById('statSuspended').textContent = suspendedCount;
+
+    tbody.innerHTML = users.map(u => `
+      <tr id="user-row-${u._id}">
+        <td><div class="prop-name">${u.name}</div></td>
+        <td>${u.email}</td>
+        <td><span class="badge ${u.role}">${u.role}</span></td>
+        <td><span class="badge ${u.status}" id="status-badge-${u._id}">${u.status}</span></td>
+        <td class="actions" id="user-actions-${u._id}">
+          ${u.role === 'admin' ? '' : u.status === 'active'
+            ? `<button class="btn-suspend" onclick="toggleUserStatus('${u._id}', 'suspended')">Suspend</button>`
+            : `<button class="btn-activate" onclick="toggleUserStatus('${u._id}', 'active')">Activate</button>`
+          }
+        </td>
+      </tr>
+    `).join('');
+
+  } catch (error) {
+    document.getElementById('usersTableBody').innerHTML =
+      `<tr class="empty-row"><td colspan="5">Could not load users. Is the backend running?</td></tr>`;
+  }
+}
+
+async function toggleUserStatus(userId, newStatus) {
+  try {
+    const res = await fetch(`${API_URL}/users/${userId}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ status: newStatus })
+    });
+
+    if (res.ok) {
+      loadUsers();
+    } else {
+      alert('Could not update user status');
+    }
+  } catch (error) {
+    alert('Could not reach server');
+  }
+}
+
+async function loadStats() {
+  try {
+    const res = await fetch(`${API_URL}/properties`);
+    const properties = await res.json();
+    if (res.ok) {
+      document.getElementById('statTotalListings').textContent = properties.length;
+      const approvedCount = properties.filter(p => p.approval_status === 'approved').length;
+      document.getElementById('statApproved').textContent = approvedCount;
+    }
+  } catch (error) {
+    // silent fail on stats
+  }
+  loadPendingProperties();
+}
+
+loadStats();
+loadUsers();
+</script>
 
 </body>
 </html>
