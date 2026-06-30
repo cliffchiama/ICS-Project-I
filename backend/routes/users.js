@@ -37,4 +37,32 @@ router.put('/:id/status', auth, async (req, res) => {
     }
 });
 
+// GET own profile
+router.get('/me', auth, async (req, res) => {
+    try {
+        const userDoc = await User.findById(req.user.id).select('-password');
+        if (!userDoc) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(userDoc);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// PUT update own profile
+router.put('/me', auth, async (req, res) => {
+    try {
+        const { name, phone_number } = req.body;
+        const userDoc = await User.findByIdAndUpdate(
+            req.user.id,
+            { name, phone_number },
+            { new: true }
+        ).select('-password');
+        res.status(200).json({ message: 'Profile updated', user: userDoc });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 module.exports = router;

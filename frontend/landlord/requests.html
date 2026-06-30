@@ -182,6 +182,11 @@ tr:hover td {
     font-size: 11px; 
     color: #6B7A8D; 
     margin-top: 2px; }
+.empty-row td {
+    text-align: center;
+    color: #9AAAB8;
+    padding: 28px 16px;
+    font-size: 13px; }
 
 /* ── Badges ── */
 .badge { 
@@ -198,6 +203,7 @@ tr:hover td {
 .badge.pending { 
     background: #FEF3C7; 
     color: #92400E; }
+.badge.declined,
 .badge.cancelled { 
     background: #FEE2E2; 
     color: #991B1B; }
@@ -250,9 +256,9 @@ tr:hover td {
   <div class="nav-links">
     <a href="landlord_dashboard.html">My Properties</a>
     <a href="#" class="active">Requests</a>
-    <a href="#">Notifications</a>
-    <a href="#">Profile</a>
-    <button class="logout">Log out</button>
+    <a href="notifications.html">Notifications</a>
+    <a href="userprofile.html">Profile</a>
+    <button class="logout" onclick="logout()">Log out</button>
   </div>
 </nav>
 
@@ -265,24 +271,24 @@ tr:hover td {
 <!-- Stats -->
 <div class="stats-row">
   <div class="stat-card">
-    <div class="stat-value">7</div>
+    <div class="stat-value" id="statTotal">–</div>
     <div class="stat-label">Total Requests</div>
     <div class="stat-sub">Across all properties</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">3</div>
+    <div class="stat-value" id="statPending">–</div>
     <div class="stat-label">Pending</div>
     <div class="stat-sub">Awaiting your response</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">3</div>
+    <div class="stat-value" id="statApproved">–</div>
     <div class="stat-label">Approved</div>
     <div class="stat-sub">This month</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">1</div>
-    <div class="stat-label">Cancelled</div>
-    <div class="stat-sub">By students</div>
+    <div class="stat-value" id="statCancelled">–</div>
+    <div class="stat-label">Cancelled / Declined</div>
+    <div class="stat-sub">By students or you</div>
   </div>
 </div>
 
@@ -290,11 +296,11 @@ tr:hover td {
 <div class="content">
   <div class="section-header">
     <h2>All Requests</h2>
-    <div class="filter-tabs">
-      <div class="filter-tab active">All</div>
-      <div class="filter-tab">Pending</div>
-      <div class="filter-tab">Approved</div>
-      <div class="filter-tab">Cancelled</div>
+    <div class="filter-tabs" id="filterTabs">
+      <div class="filter-tab active" data-filter="all">All</div>
+      <div class="filter-tab" data-filter="pending">Pending</div>
+      <div class="filter-tab" data-filter="approved">Approved</div>
+      <div class="filter-tab" data-filter="declined">Declined / Cancelled</div>
     </div>
   </div>
   <div class="table-wrap">
@@ -309,96 +315,148 @@ tr:hover td {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="student-name">Alice Wanjiku</div>
-            <div class="student-email">a.wanjiku@strathmore.edu</div>
-          </td>
-          <td>
-            <div class="prop-name">Kilimani Studio</div>
-            <div class="prop-type">Bedsitter</div>
-          </td>
-          <td>May 25, 2026</td>
-          <td>Jun 4, 2026</td>
-          <td><span class="badge pending">Pending</span></td>
-          <td class="actions">
-            <button class="btn-approve">Approve</button>
-            <button class="btn-decline">Decline</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="student-name">Brian Otieno</div>
-            <div class="student-email">b.otieno@strathmore.edu</div>
-          </td>
-          <td>
-            <div class="prop-name">Madaraka Bedsitter</div>
-            <div class="prop-type">Bedsitter</div>
-          </td>
-          <td>May 28, 2026</td>
-          <td>Jun 6, 2026</td>
-          <td><span class="badge pending">Pending</span></td>
-          <td class="actions">
-            <button class="btn-approve">Approve</button>
-            <button class="btn-decline">Decline</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="student-name">Carol Muthoni</div>
-            <div class="student-email">c.muthoni@strathmore.edu</div>
-          </td>
-          <td>
-            <div class="prop-name">Lavington 1BR</div>
-            <div class="prop-type">1 Bedroom</div>
-          </td>
-          <td>May 20, 2026</td>
-          <td>May 30, 2026</td>
-          <td><span class="badge approved">Approved</span></td>
-          <td class="actions">
-            <button class="btn-disabled">Approve</button>
-            <button class="btn-disabled">Decline</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="student-name">David Kamau</div>
-            <div class="student-email">d.kamau@strathmore.edu</div>
-          </td>
-          <td>
-            <div class="prop-name">Kilimani Studio</div>
-            <div class="prop-type">Bedsitter</div>
-          </td>
-          <td>May 15, 2026</td>
-          <td>May 22, 2026</td>
-          <td><span class="badge cancelled">Cancelled</span></td>
-          <td class="actions">
-            <button class="btn-disabled">Approve</button>
-            <button class="btn-disabled">Decline</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="student-name">Eve Njeri</div>
-            <div class="student-email">e.njeri@strathmore.edu</div>
-          </td>
-          <td>
-            <div class="prop-name">Siwaka Single Room</div>
-            <div class="prop-type">Single Room</div>
-          </td>
-          <td>Jun 1, 2026</td>
-          <td>Jun 10, 2026</td>
-          <td><span class="badge pending">Pending</span></td>
-          <td class="actions">
-            <button class="btn-approve">Approve</button>
-            <button class="btn-decline">Decline</button>
-          </td>
-        </tr>
+      <tbody id="requestsBody">
+        <tr class="empty-row"><td colspan="6">Loading...</td></tr>
       </tbody>
     </table>
   </div>
 </div>
+
+<script>
+const API_URL = 'http://localhost:5000/api';
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+if (!token || user.role !== 'landlord') {
+  window.location.href = '../authentication/login.html';
+}
+
+let allRequests = [];
+let activeFilter = 'all';
+
+function navigateTo(url) {
+  document.body.style.transition = 'opacity 0.3s ease';
+  document.body.style.opacity = '0';
+  setTimeout(() => { window.location.href = url; }, 300);
+}
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  navigateTo('../authentication/login.html');
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '–';
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function renderTable() {
+  const tbody = document.getElementById('requestsBody');
+
+  const filtered = activeFilter === 'all'
+    ? allRequests
+    : activeFilter === 'declined'
+      ? allRequests.filter(r => r.status === 'declined' || r.status === 'cancelled')
+      : allRequests.filter(r => r.status === activeFilter);
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="6">No requests found</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(r => {
+    const isPending = r.status === 'pending';
+    return `
+      <tr id="req-${r._id}">
+        <td>
+          <div class="student-name">${r.student_id?.name || 'Unknown'}</div>
+          <div class="student-email">${r.student_id?.email || ''}</div>
+        </td>
+        <td>
+          <div class="prop-name">${r.property_id?.property_name || 'Unknown property'}</div>
+          <div class="prop-type">${r.property_id?.location || ''}</div>
+        </td>
+        <td>${formatDate(r.createdAt)}</td>
+        <td>${formatDate(r.viewing_date)}</td>
+        <td><span class="badge ${r.status}">${r.status}</span></td>
+        <td class="actions">
+          ${isPending
+            ? `<button class="btn-approve" onclick="updateStatus('${r._id}', 'approved')">Approve</button>
+               <button class="btn-decline" onclick="updateStatus('${r._id}', 'declined')">Decline</button>`
+            : `<button class="btn-disabled" disabled>Approve</button>
+               <button class="btn-disabled" disabled>Decline</button>`
+          }
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = allRequests.length;
+  document.getElementById('statPending').textContent = allRequests.filter(r => r.status === 'pending').length;
+  document.getElementById('statApproved').textContent = allRequests.filter(r => r.status === 'approved').length;
+  document.getElementById('statCancelled').textContent =
+    allRequests.filter(r => r.status === 'declined' || r.status === 'cancelled').length;
+}
+
+async function loadRequests() {
+  try {
+    const res = await fetch(`${API_URL}/requests/landlord-requests`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      document.getElementById('requestsBody').innerHTML =
+        `<tr class="empty-row"><td colspan="6">${data.message || 'Could not load requests'}</td></tr>`;
+      return;
+    }
+
+    allRequests = data;
+    updateStats();
+    renderTable();
+
+  } catch (error) {
+    document.getElementById('requestsBody').innerHTML =
+      `<tr class="empty-row"><td colspan="6">Could not reach server. Is the backend running?</td></tr>`;
+  }
+}
+
+async function updateStatus(requestId, status) {
+  try {
+    const res = await fetch(`${API_URL}/requests/${requestId}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ status })
+    });
+
+    if (res.ok) {
+      loadRequests();
+    } else {
+      const data = await res.json();
+      alert(data.message || 'Could not update request');
+    }
+  } catch (error) {
+    alert('Could not reach server');
+  }
+}
+
+// Filter tab clicks
+document.getElementById('filterTabs').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('filter-tab')) return;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.getAttribute('data-filter');
+  renderTable();
+});
+
+loadRequests();
+</script>
 
 </body>
 </html>

@@ -17,10 +17,13 @@ app.use(express.json());
 const authRoutes       = require('./routes/auth');
 const propertyRoutes   = require('./routes/properties');
 const requestRoutes    = require('./routes/requests');
+const notificationRoutes = require('./routes/notifications');
+
 
 app.use('/api/auth',       authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/requests',   requestRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

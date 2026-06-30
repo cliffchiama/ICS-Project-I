@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Property = require('../models/Property');
 const auth = require('../middleware/auth');
+const Notification = require('../models/Notification');
 
 // GET all approved properties (students see this)
 router.get('/', async (req, res) => {
@@ -120,6 +121,14 @@ router.put('/:id/approval', auth, async (req, res) => {
         if (!property) {
             return res.status(404).json({ message: 'Property not found' });
         }
+
+        // Notify the landlord
+        await Notification.create({
+            user_id: property.landlord_id,
+            property_id: property._id,
+            message: `Your listing "${property.property_name}" was ${approval_status} by the admin`
+        });
+
         res.status(200).json({ message: `Property ${approval_status}`, property });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });

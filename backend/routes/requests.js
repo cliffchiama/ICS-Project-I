@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ViewingRequest = require('../models/ViewingRequest');
 const Property = require('../models/Property');
+const Notification = require('../models/Notification');
 const auth = require('../middleware/auth');
 
 // POST create a new viewing request (student only)
@@ -31,6 +32,14 @@ router.post('/', auth, async (req, res) => {
         });
 
         await request.save();
+
+        // Notify the landlord
+        await Notification.create({
+            user_id: property.landlord_id,
+            property_id: property._id,
+            message: `New viewing request for ${property.property_name}`
+        });
+
         await request.populate('property_id', 'property_name location price');
 
         res.status(201).json({ message: 'Viewing request submitted', request });
@@ -73,26 +82,37 @@ router.get('/landlord-requests', auth, async (req, res) => {
 });
 
 // PUT cancel a request (student can only cancel their own, and only if not already cancelled)
-router.put('/:id/cancel', auth, async (req, res) => {
+router.put('/:id/status', auth, async (req, res) => {
     try {
-        const request = await ViewingRequest.findById(req.params.id);
+        if (req.user.role !== 'landlord') {
+            return res.status(403).json({ message: 'Access denied' });
+        }
 
+        const { status } = req.body; // 'approved' or 'declined'
+        if (!['approved', 'declined'].includes(status)) {
+            return res.status(400).json({ message: 'Invalid status' });
+        }
+
+        const request = await ViewingRequest.findById(req.params.id).populate('property_id');
         if (!request) {
             return res.status(404).json({ message: 'Request not found' });
         }
 
-        if (request.student_id.toString() !== req.user.id) {
-            return res.status(403).json({ message: 'Not authorised to cancel this request' });
+        if (request.property_id.landlord_id.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'Not authorised to update this request' });
         }
 
-        if (request.status === 'cancelled') {
-            return res.status(400).json({ message: 'Request is already cancelled' });
-        }
-
-        request.status = 'cancelled';
+        request.status = status;
         await request.save();
 
-        res.status(200).json({ message: 'Request cancelled', request });
+        // Notify the student
+        await Notification.create({
+            user_id: request.student_id,
+            property_id: request.property_id._id,
+            message: `Your viewing request for ${request.property_id.property_name} was ${status}`
+        });
+
+        res.status(200).json({ message: `Request ${status}`, request });
 
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -122,6 +142,13 @@ router.put('/:id/status', auth, async (req, res) => {
 
         request.status = status;
         await request.save();
+
+        // Notify the student
+        await Notification.create({
+            user_id: request.student_id,
+            property_id: request.property_id._id,
+            message: `Your viewing request for ${request.property_id.property_name} was ${status}`
+        });
 
         res.status(200).json({ message: `Request ${status}`, request });
 
