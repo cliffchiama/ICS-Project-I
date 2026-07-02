@@ -27,6 +27,21 @@ router.get('/my-properties', auth, async (req, res) => {
     }
 });
 
+// GET all properties (admin only)
+router.get('/all', auth, async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied' });
+        }
+        const properties = await Property.find()
+            .populate('landlord_id', 'name email')
+            .sort({ createdAt: -1 });
+        res.status(200).json(properties);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 // POST add a new property (landlord only)
 router.post('/', auth, async (req, res) => {
     try {

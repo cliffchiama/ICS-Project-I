@@ -16,8 +16,6 @@ body {
     min-height: 100vh; 
     display: flex; 
     flex-direction: column; }
-
-/* ── Navbar ── */
 .nav { 
     background: #1A3C6B; 
     padding: 0 32px; 
@@ -44,16 +42,6 @@ body {
     display: flex; 
     align-items: center; 
     gap: 6px; }
-.nav-links a { 
-    color: #B8CCE4; 
-    font-size: 13px; 
-    text-decoration: none; 
-    padding: 6px 10px; 
-    border-radius: 6px; 
-    transition: background 0.2s; }
-.nav-links a:hover, .nav-links a.active { 
-    background: rgba(255,255,255,0.12); 
-    color: #fff; }
 .nav-links .logout { 
     color: #fff; 
     background: rgba(255,255,255,0.15); 
@@ -64,8 +52,6 @@ body {
     cursor: pointer; }
 .nav-links .logout:hover { 
     background: rgba(255,255,255,0.25); }
-
-/* ── Hero ── */
 .hero { 
     background: linear-gradient(135deg, #1A3C6B 0%, #2E6DB4 100%); 
     padding: 28px 32px 36px; }
@@ -77,8 +63,6 @@ body {
 .hero p { 
     color: #B8CCE4; 
     font-size: 13px; }
-
-/* ── Stats Row ── */
 .stats-row { 
     display: flex; 
     gap: 16px; 
@@ -104,8 +88,6 @@ body {
     font-size: 10px; 
     color: #2E6DB4; 
     margin-top: 4px; }
-
-/* ── Content ── */
 .content { 
     padding: 0 32px 32px; 
     display: flex; 
@@ -120,12 +102,23 @@ body {
     font-size: 16px; 
     font-weight: 600; 
     color: #1A1A2E; }
-.view-all { 
-    font-size: 13px; 
-    color: #2E6DB4; 
-    text-decoration: none; }
-
-/* ── Tables ── */
+.filter-tabs { 
+    display: flex; 
+    gap: 8px; }
+.filter-tab { 
+    font-size: 12px; 
+    font-weight: 600; 
+    padding: 6px 14px; 
+    border-radius: 20px; 
+    border: 1px solid #D0DAE8; 
+    background: #fff; 
+    color: #6B7A8D; 
+    cursor: pointer; 
+    transition: all 0.2s; }
+.filter-tab.active { 
+    background: #1A3C6B; 
+    color: #fff; 
+    border-color: #1A3C6B; }
 .table-wrap { 
     background: #fff; 
     border-radius: 12px; 
@@ -167,8 +160,6 @@ tr:hover td {
     color: #9AAAB8; 
     padding: 28px 16px; 
     font-size: 13px; }
-
-/* ── Badges ── */
 .badge { 
     display: inline-block; 
     font-size: 10px; 
@@ -177,99 +168,43 @@ tr:hover td {
     border-radius: 20px; 
     text-transform: uppercase; 
     letter-spacing: 0.05em; }
-.badge.active { 
-    background: #D1FAE5; 
-    color: #065F46; }
-.badge.suspended { 
-    background: #FEE2E2; 
-    color: #991B1B; }
-.badge.pending { 
-    background: #FEF3C7; 
-    color: #92400E; }
-.badge.student { 
-    background: #EBF3FB; 
-    color: #1A3C6B; }
-.badge.landlord { 
-    background: #F3E8FF; 
-    color: #6B21A8; }
-.badge.admin {
-    background: #1A3C6B;
-    color: #fff; }
-
-/* ── Action Buttons ── */
-.actions { 
-    display: flex; 
-    gap: 8px; }
-.btn-approve { 
-    background: #D1FAE5; 
-    border: none; 
-    border-radius: 6px; 
-    padding: 6px 12px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    color: #065F46; 
-    cursor: pointer; }
-.btn-approve:hover { 
-    background: #A7F3D0; }
-.btn-reject { 
-    background: #FEE2E2; 
-    border: none; 
-    border-radius: 6px; 
-    padding: 6px 12px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    color: #991B1B; 
-    cursor: pointer; }
-.btn-reject:hover { 
-    background: #FECACA; }
-.btn-suspend { 
-    background: #FEF3C7; 
-    border: none; 
-    border-radius: 6px; 
-    padding: 6px 12px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    color: #92400E; 
-    cursor: pointer; }
-.btn-suspend:hover { 
-    background: #FDE68A; }
-.btn-activate { 
-    background: #D1FAE5; 
-    border: none; 
-    border-radius: 6px; 
-    padding: 6px 12px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    color: #065F46; 
-    cursor: pointer; }
-.btn-activate:hover { 
-    background: #A7F3D0; }
+.badge.active { background: #D1FAE5; color: #065F46; }
+.badge.suspended { background: #FEE2E2; color: #991B1B; }
+.badge.pending { background: #FEF3C7; color: #92400E; }
+.badge.approved { background: #D1FAE5; color: #065F46; }
+.badge.rejected { background: #FEE2E2; color: #991B1B; }
+.badge.student { background: #EBF3FB; color: #1A3C6B; }
+.badge.landlord { background: #F3E8FF; color: #6B21A8; }
+.badge.admin { background: #1A3C6B; color: #fff; }
+.actions { display: flex; gap: 8px; }
+.btn-approve { background: #D1FAE5; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #065F46; cursor: pointer; }
+.btn-approve:hover { background: #A7F3D0; }
+.btn-reject { background: #FEE2E2; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #991B1B; cursor: pointer; }
+.btn-reject:hover { background: #FECACA; }
+.btn-suspend { background: #FEF3C7; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #92400E; cursor: pointer; }
+.btn-suspend:hover { background: #FDE68A; }
+.btn-activate { background: #D1FAE5; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #065F46; cursor: pointer; }
+.btn-activate:hover { background: #A7F3D0; }
+.btn-disabled { background: #F4F7FB; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #9AAAB8; cursor: not-allowed; }
 </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="nav">
   <div class="nav-brand">
     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    Pata Place
+    Pata Place — Admin
   </div>
   <div class="nav-links">
-    <a href="#" class="active">Dashboard</a>
-    <a href="#">Users</a>
-    <a href="#">Listings</a>
-    <a href="#">Reports</a>
     <button class="logout" onclick="logout()">Log out</button>
   </div>
 </nav>
 
-<!-- Hero -->
 <div class="hero">
   <h1>Admin Dashboard</h1>
   <p>System overview and management</p>
 </div>
 
-<!-- Stats -->
 <div class="stats-row">
   <div class="stat-card">
     <div class="stat-value" id="statTotalUsers">–</div>
@@ -293,13 +228,18 @@ tr:hover td {
   </div>
 </div>
 
-<!-- Content -->
 <div class="content">
 
-  <!-- Listings Pending Approval -->
+  <!-- All Listings -->
   <div>
     <div class="section-header">
-      <h2>Listings Pending Approval</h2>
+      <h2>All Listings</h2>
+      <div class="filter-tabs" id="listingFilterTabs">
+        <div class="filter-tab active" data-filter="all">All</div>
+        <div class="filter-tab" data-filter="pending">Pending</div>
+        <div class="filter-tab" data-filter="approved">Approved</div>
+        <div class="filter-tab" data-filter="rejected">Rejected</div>
+      </div>
     </div>
     <div class="table-wrap">
       <table>
@@ -310,11 +250,12 @@ tr:hover td {
             <th>Location</th>
             <th>Price / mo</th>
             <th>Date Posted</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="pendingTableBody">
-          <tr class="empty-row"><td colspan="6">Loading...</td></tr>
+        <tbody id="listingsTableBody">
+          <tr class="empty-row"><td colspan="7">Loading...</td></tr>
         </tbody>
       </table>
     </div>
@@ -350,7 +291,6 @@ const API_URL = 'http://localhost:5000/api';
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-// Guard: must be logged in as admin
 if (!token || user.role !== 'admin') {
   window.location.href = '../authentication/login.html';
 }
@@ -362,47 +302,72 @@ function logout() {
 }
 
 function formatDate(dateStr) {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-async function loadPendingProperties() {
+let allListings = [];
+let activeListingFilter = 'all';
+
+async function loadListings() {
   try {
-    const res = await fetch(`${API_URL}/properties/pending`, {
+    const res = await fetch(`${API_URL}/properties/all`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    const properties = await res.json();
-    const tbody = document.getElementById('pendingTableBody');
-
-    if (!res.ok || properties.length === 0) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="6">No listings pending approval</td></tr>`;
-      document.getElementById('statPendingCount').textContent = '0 pending approval';
+    const data = await res.json();
+    if (!res.ok) {
+      document.getElementById('listingsTableBody').innerHTML =
+        `<tr class="empty-row"><td colspan="7">Could not load listings</td></tr>`;
       return;
     }
-
-    document.getElementById('statPendingCount').textContent = `${properties.length} pending approval`;
-
-    tbody.innerHTML = properties.map(p => `
-      <tr id="pending-row-${p._id}">
-        <td>
-          <div class="prop-name">${p.property_name}</div>
-          <div class="prop-sub">${p.property_type}</div>
-        </td>
-        <td>${p.landlord_id?.name || 'Unknown'}</td>
-        <td>${p.location}</td>
-        <td>KES ${p.price.toLocaleString()}</td>
-        <td>${formatDate(p.createdAt)}</td>
-        <td class="actions">
-          <button class="btn-approve" onclick="updateApproval('${p._id}', 'approved')">Approve</button>
-          <button class="btn-reject" onclick="updateApproval('${p._id}', 'rejected')">Reject</button>
-        </td>
-      </tr>
-    `).join('');
-
+    allListings = data;
+    updateListingStats();
+    renderListings();
   } catch (error) {
-    document.getElementById('pendingTableBody').innerHTML =
-      `<tr class="empty-row"><td colspan="6">Could not load listings. Is the backend running?</td></tr>`;
+    document.getElementById('listingsTableBody').innerHTML =
+      `<tr class="empty-row"><td colspan="7">Could not reach server. Is the backend running?</td></tr>`;
   }
+}
+
+function updateListingStats() {
+  document.getElementById('statTotalListings').textContent = allListings.length;
+  const approvedCount = allListings.filter(p => p.approval_status === 'approved').length;
+  const pendingCount = allListings.filter(p => p.approval_status === 'pending').length;
+  document.getElementById('statApproved').textContent = approvedCount;
+  document.getElementById('statPendingCount').textContent = `${pendingCount} pending approval`;
+}
+
+function renderListings() {
+  const tbody = document.getElementById('listingsTableBody');
+  const filtered = activeListingFilter === 'all'
+    ? allListings
+    : allListings.filter(p => p.approval_status === activeListingFilter);
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="7">No listings found</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(p => `
+    <tr id="listing-row-${p._id}">
+      <td>
+        <div class="prop-name">${p.property_name}</div>
+        <div class="prop-sub">${p.property_type}</div>
+      </td>
+      <td>${p.landlord_id?.name || 'Unknown'}</td>
+      <td>${p.location}</td>
+      <td>KES ${p.price.toLocaleString()}</td>
+      <td>${formatDate(p.createdAt)}</td>
+      <td><span class="badge ${p.approval_status}">${p.approval_status}</span></td>
+      <td class="actions">
+        ${p.approval_status === 'pending'
+          ? `<button class="btn-approve" onclick="updateApproval('${p._id}', 'approved')">Approve</button>
+             <button class="btn-reject" onclick="updateApproval('${p._id}', 'rejected')">Reject</button>`
+          : `<button class="btn-disabled" disabled>Approve</button>
+             <button class="btn-disabled" disabled>Reject</button>`
+        }
+      </td>
+    </tr>
+  `).join('');
 }
 
 async function updateApproval(propertyId, status) {
@@ -415,11 +380,8 @@ async function updateApproval(propertyId, status) {
       },
       body: JSON.stringify({ approval_status: status })
     });
-
     if (res.ok) {
-      const row = document.getElementById(`pending-row-${propertyId}`);
-      if (row) row.remove();
-      loadStats();
+      loadListings();
     } else {
       alert('Could not update listing status');
     }
@@ -427,6 +389,14 @@ async function updateApproval(propertyId, status) {
     alert('Could not reach server');
   }
 }
+
+document.getElementById('listingFilterTabs').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('filter-tab')) return;
+  document.querySelectorAll('#listingFilterTabs .filter-tab').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  activeListingFilter = e.target.getAttribute('data-filter');
+  renderListings();
+});
 
 async function loadUsers() {
   try {
@@ -454,9 +424,9 @@ async function loadUsers() {
         <td><div class="prop-name">${u.name}</div></td>
         <td>${u.email}</td>
         <td><span class="badge ${u.role}">${u.role}</span></td>
-        <td><span class="badge ${u.status}" id="status-badge-${u._id}">${u.status}</span></td>
-        <td class="actions" id="user-actions-${u._id}">
-          ${u.role === 'admin' ? '' : u.status === 'active'
+        <td><span class="badge ${u.status}">${u.status}</span></td>
+        <td class="actions">
+          ${u.role === 'admin' ? '–' : u.status === 'active'
             ? `<button class="btn-suspend" onclick="toggleUserStatus('${u._id}', 'suspended')">Suspend</button>`
             : `<button class="btn-activate" onclick="toggleUserStatus('${u._id}', 'active')">Activate</button>`
           }
@@ -480,7 +450,6 @@ async function toggleUserStatus(userId, newStatus) {
       },
       body: JSON.stringify({ status: newStatus })
     });
-
     if (res.ok) {
       loadUsers();
     } else {
@@ -491,22 +460,7 @@ async function toggleUserStatus(userId, newStatus) {
   }
 }
 
-async function loadStats() {
-  try {
-    const res = await fetch(`${API_URL}/properties`);
-    const properties = await res.json();
-    if (res.ok) {
-      document.getElementById('statTotalListings').textContent = properties.length;
-      const approvedCount = properties.filter(p => p.approval_status === 'approved').length;
-      document.getElementById('statApproved').textContent = approvedCount;
-    }
-  } catch (error) {
-    // silent fail on stats
-  }
-  loadPendingProperties();
-}
-
-loadStats();
+loadListings();
 loadUsers();
 </script>
 
